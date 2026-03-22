@@ -1,0 +1,1225 @@
+openapi: 3.0.0
+info:
+  title: API барои системаи тиҷоратии электронӣ
+  description: Санади API барои ҳама контроллерҳо дар системаи тиҷоратии электронӣ
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+paths:
+  # Users
+  /users:
+    get:
+      summary: Рӯйхати корбаронро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Корбари нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /users/{id}:
+    get:
+      summary: Корбари мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Корбари мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Корбари мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Roles
+  /roles:
+    get:
+      summary: Рӯйхати ролҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Роли нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /roles/{id}:
+    get:
+      summary: Роли мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Роли мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Роли мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  /roles/assign:
+    post:
+      summary: Ролро ба корбар таъин кардан
+      responses:
+        '200':
+          description: Таъин шуд
+  # Permissions
+  /permissions:
+    get:
+      summary: Рӯйхати иҷозатҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Иҷозати нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /permissions/{id}:
+    get:
+      summary: Иҷозати мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Иҷозати мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Иҷозати мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  /permissions/assign:
+    post:
+      summary: Иҷозатро таъин кардан
+      responses:
+        '200':
+          description: Таъин шуд
+  # Photos
+  /photos:
+    get:
+      summary: Рӯйхати аксҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Акси нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /photos/{id}:
+    get:
+      summary: Акси мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Акси мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Акси мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Orders
+  /orders:
+    get:
+      summary: Рӯйхати фармоишҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Фармоиши нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /orders/{id}:
+    get:
+      summary: Фармоиши мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Фармоиши мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Фармоиши мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Reviews
+  /reviews:
+    get:
+      summary: Рӯйхати шарҳҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Шарҳи нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /reviews/{id}:
+    get:
+      summary: Шарҳи мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Шарҳи мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Шарҳи мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Statuses
+  /statuses:
+    get:
+      summary: Рӯйхати ҳолатҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Ҳолати нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /statuses/{id}:
+    get:
+      summary: Ҳолати мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Ҳолати мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Ҳолати мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Products
+  /products:
+    get:
+      summary: Рӯйхати маҳсулотҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Маҳсулоти нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /products/{id}:
+    get:
+      summary: Маҳсулоти мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Маҳсулоти мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Маҳсулоти мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  /products/{product}/related:
+    get:
+      summary: Маҳсулотҳои алоқамандро гирифтан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+  # Settings
+  /settings:
+    get:
+      summary: Рӯйхати танзимотҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Танзими нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /settings/{id}:
+    get:
+      summary: Танзими мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Танзими мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Танзими мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Discounts
+  /discounts:
+    get:
+      summary: Рӯйхати тахфифҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Тахфифи нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /discounts/{id}:
+    get:
+      summary: Тахфифи мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Тахфифи мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Тахфифи мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Favorites
+  /favorites:
+    get:
+      summary: Рӯйхати дӯстдоштаҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Дӯстдоштаи нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /favorites/{id}:
+    get:
+      summary: Дӯстдоштаи мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Дӯстдоштаи мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Дӯстдоштаи мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Categories
+  /categories:
+    get:
+      summary: Рӯйхати категорияҳоро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Категорияи нав эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /categories/{id}:
+    get:
+      summary: Категорияи мушаххасро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Категорияи мушаххасро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Категорияи мушаххасро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # User Photos
+  /users/{user}/photos:
+    get:
+      summary: Рӯйхати аксҳои корбарро гирифтан
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Акси нав барои корбар эҷод кардан
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Эҷод шуд
+  /users/{user}/photos/{photo}:
+    get:
+      summary: Акси мушаххаси корбарро гирифтан
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Акси мушаххаси корбарро навсозӣ кардан
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Акси мушаххаси корбарро нест кардан
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # User Settings
+  /user-settings:
+    get:
+      summary: Рӯйхати танзимоти корбарро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Танзими нав барои корбар эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /user-settings/{id}:
+    get:
+      summary: Танзими мушаххаси корбарро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Танзими мушаххаси корбарро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Танзими мушаххаси корбарро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Payment Types
+  /payment-types:
+    get:
+      summary: Рӯйхати намудҳои пардохтро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Намуди нави пардохт эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /payment-types/{id}:
+    get:
+      summary: Намуди мушаххаси пардохтро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Намуди мушаххаси пардохтро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Намуди мушаххаси пардохтро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # User Addresses
+  /user-addresses:
+    get:
+      summary: Рӯйхати суроғаҳои корбарро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Суроғаи нав барои корбар эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /user-addresses/{id}:
+    get:
+      summary: Суроғаи мушаххаси корбарро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Суроғаи мушаххаси корбарро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Суроғаи мушаххаси корбарро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Status Orders
+  /statuses/{status}/orders:
+    get:
+      summary: Рӯйхати фармоишҳои ҳолати мушаххасро гирифтан
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Фармоиши нав барои ҳолати мушаххас эҷод кардан
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Эҷод шуд
+  /statuses/{status}/orders/{order}:
+    get:
+      summary: Фармоиши мушаххаси ҳолати мушаххасро гирифтан
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: order
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Фармоиши мушаххаси ҳолати мушаххасро навсозӣ кардан
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: order
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Фармоиши мушаххаси ҳолати мушаххасро нест кардан
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: order
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Product Photos
+  /products/{product}/photos:
+    get:
+      summary: Рӯйхати аксҳои маҳсулотро гирифтан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Акси нав барои маҳсулот эҷод кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Эҷод шуд
+  /products/{product}/photos/{photo}:
+    get:
+      summary: Акси мушаххаси маҳсулотро гирифтан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Акси мушаххаси маҳсулотро навсозӣ кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Акси мушаххаси маҳсулотро нест кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: photo
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Product Reviews
+  /products/{product}/reviews:
+    get:
+      summary: Рӯйхати шарҳҳои маҳсулотро гирифтан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Шарҳи нав барои маҳсулот эҷод кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Эҷод шуд
+  /products/{product}/reviews/{review}:
+    get:
+      summary: Шарҳи мушаххаси маҳсулотро гирифтан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: review
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Шарҳи мушаххаси маҳсулотро навсозӣ кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: review
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Шарҳи мушаххаси маҳсулотро нест кардан
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: review
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Delivery Methods
+  /delivery-methods:
+    get:
+      summary: Рӯйхати усулҳои интиқолро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Усули нави интиқол эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /delivery-methods/{id}:
+    get:
+      summary: Усули мушаххаси интиқолро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Усули мушаххаси интиқолро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Усули мушаххаси интиқолро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Payment Card Types
+  /payment-card-types:
+    get:
+      summary: Рӯйхати намудҳои кортҳои пардохтро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Намуди нави корти пардохт эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /payment-card-types/{id}:
+    get:
+      summary: Намуди мушаххаси корти пардохтро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Намуди мушаххаси корти пардохтро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Намуди мушаххаси корти пардохтро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # Category Products
+  /categories/{category}/products:
+    get:
+      summary: Рӯйхати маҳсулотҳои категорияро гирифтан
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Маҳсулоти нав барои категория эҷод кардан
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Эҷод шуд
+  /categories/{category}/products/{product}:
+    get:
+      summary: Маҳсулоти мушаххаси категорияро гирифтан
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Маҳсулоти мушаххаси категорияро навсозӣ кардан
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Маҳсулоти мушаххаси категорияро нест кардан
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
+  # User Payment Cards
+  /user-payment-cards:
+    get:
+      summary: Рӯйхати кортҳои пардохти корбарро гирифтан
+      responses:
+        '200':
+          description: Муаффак
+    post:
+      summary: Корти нави пардохт барои корбар эҷод кардан
+      responses:
+        '201':
+          description: Эҷод шуд
+  /user-payment-cards/{id}:
+    get:
+      summary: Корти мушаххаси пардохти корбарро гирифтан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Муаффак
+    put:
+      summary: Корти мушаххаси пардохти корбарро навсозӣ кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Навсозӣ шуд
+    delete:
+      summary: Корти мушаххаси пардохти корбарро нест кардан
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Нест шуд
