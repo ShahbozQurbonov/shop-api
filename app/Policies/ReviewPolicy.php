@@ -13,7 +13,7 @@ class ReviewPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ReviewPolicy
      */
     public function view(User $user, Review $review): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class ReviewPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->can('review:create');
     }
 
     /**
@@ -37,7 +37,7 @@ class ReviewPolicy
      */
     public function update(User $user, Review $review): bool
     {
-        //
+        return $user->id===$review->user_id || $user->can('review:update');
     }
 
     /**
@@ -45,7 +45,7 @@ class ReviewPolicy
      */
     public function delete(User $user, Review $review): bool
     {
-        //
+        return $user->id===$review->user_id || $user->can('review:delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class ReviewPolicy
      */
     public function restore(User $user, Review $review): bool
     {
-        //
+        return $user->can('review:restore');
     }
 
     /**

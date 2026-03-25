@@ -3,84 +3,97 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Category::create([
             'name' => [
                 'uz' => 'Stol',
-                'ru' => 'Стол'
+                'ru' => 'Стол',
+                'tj' => 'Миз'
             ],
         ]);
 
         Category::create([
             'name' => [
                 'uz' => 'Divan',
-                'ru' => 'Диван'
+                'ru' => 'Диван',
+                'tj' => 'Диван'
             ],
         ]);
 
         $category = Category::create([
             'name' => [
                 'uz' => 'Kreslo',
-                'ru' => 'Кресло'
+                'ru' => 'Кресло',
+                'tj' => 'Курсӣ'
             ],
         ]);
+
         $category->childCategories()->create([
             'name' => [
-                'uz' => 'Offis',
-                'ru' => 'Offis'
+                'uz' => 'Ofis',
+                'ru' => 'Офис',
+                'tj' => 'Идора'
             ],
         ]);
+
         $childCategory = $category->childCategories()->create([
             'name' => [
-                'uz' => 'Gaming',
-                'ru' => 'Gaming'
+                'uz' => 'Geymer',
+                'ru' => 'Игровое',
+                'tj' => 'Бозӣ'
             ],
         ]);
+
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'Rgb',
-                'ru' => 'Rgb'
+                'uz' => 'RGB',
+                'ru' => 'RGB',
+                'tj' => 'RGB'
             ],
         ]);
+
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'Women',
-                'ru' => 'Women'
+                'uz' => 'Ayollar uchun',
+                'ru' => 'Женское',
+                'tj' => 'Барои занон'
             ],
         ]);
+
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'Black',
-                'ru' => 'Black'
+                'uz' => 'Qora',
+                'ru' => 'Чёрный',
+                'tj' => 'Сиёҳ'
             ],
         ]);
+
         $category->childCategories()->create([
             'name' => [
                 'uz' => 'Yumshoq',
-                'ru' => 'Yumshoq'
+                'ru' => 'Мягкое',
+                'tj' => 'Нарм'
             ],
         ]);
 
         Category::create([
             'name' => [
                 'uz' => 'Yotoq',
-                'ru' => 'Кровать'
+                'ru' => 'Кровать',
+                'tj' => 'Кат'
             ],
         ]);
 
         Category::create([
             'name' => [
                 'uz' => 'Stul',
-                'ru' => 'Стул'
+                'ru' => 'Стул',
+                'tj' => 'Курсӣ'
             ],
         ]);
     }

@@ -13,10 +13,12 @@ class DeliveryMethodSeeder extends Seeder
             'name' => [
                 'uz' => 'Tekin',
                 'ru' => 'Бесплатно',
+                'tj' => 'Ройгон'
             ],
             'estimated_time' => [
                 'uz' => '5 kun',
-                'ru' => 'ru 5 kun',
+                'ru' => '5 дней',
+                'tj' => '5 рӯз'
             ],
             'sum' => 0,
         ]);
@@ -24,25 +26,29 @@ class DeliveryMethodSeeder extends Seeder
         DeliveryMethod::create([
             'name' => [
                 'uz' => 'Standart',
-                'ru' => 'Standart',
+                'ru' => 'Стандарт',
+                'tj' => 'Стандартӣ'
             ],
             'estimated_time' => [
                 'uz' => '3 kun',
-                'ru' => 'ru 3 kun',
+                'ru' => '3 дня',
+                'tj' => '3 рӯз'
             ],
-            'sum' => 40000,
+            'sum' => 40,
         ]);
 
         DeliveryMethod::create([
             'name' => [
                 'uz' => 'Tez',
-                'ru' => 'ru Tez',
+                'ru' => 'Быстрая',
+                'tj' => 'Зуд'
             ],
             'estimated_time' => [
                 'uz' => '1 kun',
-                'ru' => 'ru 1 kun',
+                'ru' => '1 день',
+                'tj' => '1 рӯз'
             ],
-            'sum' => 80000,
+            'sum' => 80,
         ]);
     }
 }

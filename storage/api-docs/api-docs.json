@@ -6,144 +6,197 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/attributes": {
+        "/api/admin/orders": {
             "get": {
                 "tags": [
-                    "Attributes"
+                    "Admin/Orders"
                 ],
-                "summary": "Рӯйхати атрибутҳоро гирифтан",
-                "operationId": "e48983aaee64bf1da038f1378aff0c81",
+                "summary": "Рӯйхати фармоишҳо (Admin)",
+                "description": "Гирифтани ҳамаи фармоишҳо бо филтр ва пагинация",
+                "operationId": "de876ba5308ded6dbb715173a14d7d4d",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID корбар",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "delivery_method_id",
+                        "in": "query",
+                        "description": "ID усули интиқол",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    },
+                    {
+                        "name": "payment_type_id",
+                        "in": "query",
+                        "description": "ID намуди пардохт",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "sum_from",
+                        "in": "query",
+                        "description": "Маблағи аз",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "example": 100
+                        }
+                    },
+                    {
+                        "name": "sum_to",
+                        "in": "query",
+                        "description": "Маблағи то",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "example": 1000
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Санаи оғоз",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-01-01"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Санаи анҷом",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-01-31"
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "Сортировка (created_at, sum, id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at"
+                        }
+                    },
+                    {
+                        "name": "paginate",
+                        "in": "query",
+                        "description": "Шумора дар як саҳифа",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Attributes"
-                ],
-                "summary": "Атрибути нав эҷод кардан",
-                "operationId": "48e2284fe9ed7ecdc495aa7191e74084",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
+                        "description": "Рӯйхати фармоишҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "comment": {
+                                                        "type": "string",
+                                                        "example": "Тезтар оваред"
+                                                    },
+                                                    "sum": {
+                                                        "type": "number",
+                                                        "example": 250.5
+                                                    },
+                                                    "user": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "id": 1,
+                                                            "name": "Ali"
+                                                        }
+                                                    },
+                                                    "status": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "id": 1,
+                                                            "name": "closed"
+                                                        }
+                                                    },
+                                                    "products": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "address": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "city": "Dushanbe",
+                                                            "street": "Rudaki"
+                                                        }
+                                                    },
+                                                    "payment_type": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "id": 1,
+                                                            "name": "cash"
+                                                        }
+                                                    },
+                                                    "delivery_method": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "id": 1,
+                                                            "name": "courier"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Иҷозат нест"
                     }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Эҷод шуд"
-                    }
-                }
-            }
-        },
-        "/api/attributes/create": {
-            "get": {
-                "tags": [
-                    "Attributes"
-                ],
-                "summary": "Шакли эҷоди атрибутро нишон додан",
-                "operationId": "7d9a2d037b3010016db2df4b01599e97",
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            }
-        },
-        "/api/attributes/{id}": {
-            "get": {
-                "summary": "Атрибути мушаххасро нишон додан",
-                "operationId": "a03e22ecc35726fdd46bcae4f84cc446",
-                "parameters": [
+                "security": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "bearerAuth": []
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Атрибути мушаххасро навсозӣ кардан",
-                "operationId": "cccd28abb387a54a131aab9ca4cc5e90",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Навсозӣ шуд"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Атрибути мушаххасро нест кардан",
-                "operationId": "8276ee3f4425e36cb1c3d7fe576471b4",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Нест шуд"
-                    }
-                }
-            }
-        },
-        "/api/attributes/{id}/edit": {
-            "get": {
-                "summary": "Шакли таҳрири атрибутро нишон додан",
-                "operationId": "3acbe8c4dda443302efbc2e2d517e9e1",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
+                ]
             }
         },
         "/api/login": {
@@ -151,21 +204,55 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Воридшавӣ истифода кардан",
+                "summary": "Воридшавӣ ба система",
+                "description": "Истифодабаранда бо email ва password ворид мешавад",
                 "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Почтаи электронӣ",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "user@example.com"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Рамз",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password",
+                            "example": "12345678"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "Воридшавӣ муаффак"
+                        "description": "Воридшавӣ бомуваффақият анҷом ёфт",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdefg123456"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Хатогии валидация"
+                    },
+                    "401": {
+                        "description": "Email ё password нодуруст аст"
                     }
                 }
             }
@@ -176,12 +263,21 @@
                     "Auth"
                 ],
                 "summary": "Берун рафтан",
+                "description": "Нест кардани token-и корбар",
                 "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
                 "responses": {
                     "200": {
-                        "description": "Берун рафтани муаффак"
+                        "description": "Берун рафтани муваффақ"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/register": {
@@ -190,20 +286,90 @@
                     "Auth"
                 ],
                 "summary": "Ба қайд гирифтан",
+                "description": "Эҷод кардани корбари нав",
                 "operationId": "8a56853624e025573120a09a4c75d468",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "Ном",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Ali"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Насаб",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Ahmadov"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Почтаи электронӣ",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "user@example.com"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Рақами телефон",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "+992900000000"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Рамз",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "12345678"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Тасдиқи рамз",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "12345678"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "Ба қайд гирифтани муаффак"
+                        "description": "Ба қайд гирифтан муваффақ шуд",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdefg123456"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Хатогии валидация"
                     }
                 }
             }
@@ -213,21 +379,57 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Пароленро тағйир додан",
+                "summary": "Паролро иваз кардан",
+                "description": "Тағйир додани пароли корбар",
                 "operationId": "540baf9b2324b156be71c57911de6714",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer 1|abcdefg123456"
+                        }
+                    },
+                    {
+                        "name": "current_password",
+                        "in": "query",
+                        "description": "Пароли ҳозира",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "12345678"
+                        }
+                    },
+                    {
+                        "name": "new_password",
+                        "in": "query",
+                        "description": "Пароли нав",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "87654321"
+                        }
+                    },
+                    {
+                        "name": "new_password_confirmation",
+                        "in": "query",
+                        "description": "Тасдиқи пароли нав",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "87654321"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "Пароленро навсозӣ кардани муаффак"
+                        "description": "Парол бомуваффақият иваз шуд"
+                    },
+                    "422": {
+                        "description": "Хатогии валидация"
                     }
                 }
             }
@@ -237,11 +439,40 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Маълумоти корбари ҷорӣро гирифтан",
+                "summary": "Маълумоти корбар",
+                "description": "Гирифтани маълумоти корбари ҷорӣ",
                 "operationId": "7c1cf647d76fad4b3eb1549fa4fe2f4c",
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
+                        "description": "Муваффақ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Ali"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "Ahmadov"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "user@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -255,31 +486,75 @@
                 "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
+                        "description": "Муваффак"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
                     "Categories"
                 ],
-                "summary": "Категорияи нав эҷод кардан",
+                "summary": "Эҷоди категория",
                 "operationId": "71fcad552bb0eaba9fb191fd8d8dcab0",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string",
+                                                "example": "Stol"
+                                            },
+                                            "ru": {
+                                                "type": "string",
+                                                "example": "Стол"
+                                            },
+                                            "tj": {
+                                                "type": "string",
+                                                "example": "Миз"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "example": "icon.png"
+                                    },
+                                    "order": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
                                 "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Эҷод шуд"
+                    "200": {
+                        "description": "Категория сохта шуд"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/categories/{id}": {
@@ -287,7 +562,7 @@
                 "tags": [
                     "Categories"
                 ],
-                "summary": "Категорияи мушаххасро нишон додан",
+                "summary": "Намоиши категория",
                 "operationId": "c68e76d323c008827a9e47398b1583de",
                 "parameters": [
                     {
@@ -301,139 +576,296 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            }
-        },
-        "/api/orders": {
-            "get": {
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Рӯйхати фармоишҳоро гирифтан",
-                "operationId": "2cd7e03021e72d9d799c12dfe179c865",
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Фармоиш эҷод кардан",
-                "operationId": "d690d6834318e9b064df441e854de8b9",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
+                        "description": "Муваффақ"
                     }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Эҷод шуд"
-                    }
-                }
-            }
-        },
-        "/api/orders/{order}": {
-            "get": {
-                "tags": [
-                    "Orders"
-                ],
-                "summary": "Фармоишро нишон додан",
-                "operationId": "f090f23952a43521af6f1d133826bc37",
-                "parameters": [
+                "security": [
                     {
-                        "name": "order",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "bearerAuth": []
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            }
-        },
-        "/api/products": {
-            "get": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Рӯйхати маҳсулотҳоро гирифтан",
-                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Маҳсулот эҷод кардан",
-                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Эҷод шуд"
-                    }
-                }
-            }
-        },
-        "/api/products/{product}": {
-            "get": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Маҳсулотро нишон додан",
-                "operationId": "05f6ffcb49f47b4f4fc1a1c21ed60011",
-                "parameters": [
-                    {
-                        "name": "product",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Муаффак"
-                    }
-                }
+                ]
             },
             "put": {
                 "tags": [
-                    "Products"
+                    "Categories"
                 ],
-                "summary": "Маҳсулотро навсозӣ кардан",
-                "operationId": "c474d1318e5b8c3de1f4d52b6053111f",
+                "summary": "Навсозии категория",
+                "operationId": "0e686b2748211cc688333ed705dc111f",
                 "parameters": [
                     {
-                        "name": "product",
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "parent_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string"
+                                            },
+                                            "ru": {
+                                                "type": "string"
+                                            },
+                                            "tj": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "icon": {
+                                        "type": "string"
+                                    },
+                                    "order": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Категория навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Нест кардани категория",
+                "operationId": "4c12e22a7f8c617bd83bfa1fdc05428d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Категория нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories/{category}/products": {
+            "get": {
+                "tags": [
+                    "CategoryProduct"
+                ],
+                "summary": "Гирифтани маҳсулотҳо аз рӯи категория",
+                "description": "Рӯйхати саҳифабандишудаи маҳсулотҳо, ки ба як категория тааллуқ доранд, бо истифода аз cursor pagination",
+                "operationId": "36687d537a60aa81566d618376f0ade1",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "ID-и категория",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маҳсулотҳо бомуваффақият гирифта шуданд"
+                    },
+                    "404": {
+                        "description": "Категория ёфт нашуд"
+                    }
+                }
+            }
+        },
+        "/api/discounts": {
+            "get": {
+                "tags": [
+                    "Discounts"
+                ],
+                "summary": "Рӯйхати тахфифҳо",
+                "operationId": "c34129a2b20b11a1bb914f9657376fb5",
+                "responses": {
+                    "200": {
+                        "description": "Муваффақ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "product_id": {
+                                                "type": "integer",
+                                                "example": 10
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "New Year Sale"
+                                            },
+                                            "percent": {
+                                                "type": "number",
+                                                "example": 10
+                                            },
+                                            "sum": {
+                                                "type": "number",
+                                                "example": 10
+                                            },
+                                            "from": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2026-01-01"
+                                            },
+                                            "to": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2026-01-10"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Discounts"
+                ],
+                "summary": "Эҷоди тахфиф",
+                "operationId": "9123c70fc44b58b641612d7f6f90469e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_id"
+                                ],
+                                "properties": {
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Winter Sale"
+                                    },
+                                    "percent": {
+                                        "type": "number",
+                                        "example": 15
+                                    },
+                                    "sum": {
+                                        "type": "number",
+                                        "example": 5
+                                    },
+                                    "from": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-01-01"
+                                    },
+                                    "to": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-01-10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Тахфиф сохта шуд"
+                    },
+                    "400": {
+                        "description": "Аллакай тахфиф барои ин маҳсулот вуҷуд дорад"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/discounts/{id}": {
+            "get": {
+                "tags": [
+                    "Discounts"
+                ],
+                "summary": "Намоиши як тахфиф",
+                "operationId": "fbf1f3a350b69a823f2d71699d2da78b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Муваффақ"
+                    },
+                    "404": {
+                        "description": "Ёфт нашуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Discounts"
+                ],
+                "summary": "Навсозии тахфиф",
+                "operationId": "17bf23d3850f2a65449514eb5f490fe0",
+                "parameters": [
+                    {
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -446,6 +878,25 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "percent": {
+                                        "type": "number"
+                                    },
+                                    "sum": {
+                                        "type": "number"
+                                    },
+                                    "from": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "to": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
                                 "type": "object"
                             }
                         }
@@ -455,18 +906,1018 @@
                     "200": {
                         "description": "Навсозӣ шуд"
                     }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Discounts"
+                ],
+                "summary": "Нест кардани тахфиф",
+                "operationId": "cab56bd386823e47377b3584990cb58b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Тахфиф нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Рӯйхати фармоишҳои корбар",
+                "operationId": "2cd7e03021e72d9d799c12dfe179c865",
+                "parameters": [
+                    {
+                        "name": "status_id",
+                        "in": "query",
+                        "description": "Филтр аз рӯи ҳолат",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати фармоишҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "sum": {
+                                                        "type": "number"
+                                                    },
+                                                    "comment": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "object"
+                                                    },
+                                                    "products": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "object"
+                                                                },
+                                                                "price": {
+                                                                    "type": "number"
+                                                                },
+                                                                "quantity": {
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "address": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Эҷоди фармоиш",
+                "operationId": "d690d6834318e9b064df441e854de8b9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "delivery_method_id",
+                                    "payment_type_id",
+                                    "products"
+                                ],
+                                "properties": {
+                                    "delivery_method_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "payment_type_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "address_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "stock_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "Илтимос зуд расонед"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Фармоиш сохта шуд"
+                    },
+                    "400": {
+                        "description": "Баъзе маҳсулот дастрас нестанд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{id}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Намоиши як фармоиш",
+                "operationId": "c29621029e70f65247909d3e09031118",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и фармоиш",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маълумоти фармоиш",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "sum": {
+                                            "type": "number"
+                                        },
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        },
+                                        "status": {
+                                            "type": "object"
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "object"
+                                                    },
+                                                    "price": {
+                                                        "type": "number"
+                                                    },
+                                                    "quantity": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "address": {
+                                            "type": "object"
+                                        },
+                                        "payment_type": {
+                                            "type": "object"
+                                        },
+                                        "delivery_method": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Навсозии фармоиш",
+                "operationId": "6a7029f5510ca08e28a2d58a5fe19439",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и фармоиш",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "delivery_method_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "payment_type_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "address_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "status_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "Тағйир дода шуд"
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "stock_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Фармоиш бомуваффақият навсозӣ шуд"
+                    },
+                    "400": {
+                        "description": "Баъзе маҳсулот дастрас нестанд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Нест кардани фармоиш",
+                "operationId": "303a7b797887b66c7790c4c187b54790",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и фармоиш",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Фармоиш нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Рӯйхати иҷозатҳо",
+                "description": "Гирифтани ҳамаи иҷозатҳо",
+                "operationId": "27bb1606a7b293d1d49f57bb94ae71f7",
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати иҷозатҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "permission:create"
+                                                    },
+                                                    "guard_name": {
+                                                        "type": "string",
+                                                        "example": "web"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Иҷозат нест"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Эҷоди иҷозат",
+                "description": "Иҷозати нав месозад",
+                "operationId": "37c918c86b5085b0eb088fa760c7175d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "permission:create"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Иҷозат сохта шуд",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission created"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": {
+                                                "id": 1,
+                                                "name": "permission:create",
+                                                "guard_name": "web"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Аллакай вуҷуд дорад"
+                    },
+                    "403": {
+                        "description": "Иҷозат нест"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/assign": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Пайваст кардани иҷозат ба роль",
+                "description": "Иҷозатро ба роль пайваст мекунад",
+                "operationId": "f4585e1c16c17e76b368e0080b494568",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Муваффақият",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission assigned to role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Аллакай пайваст шудааст"
+                    },
+                    "403": {
+                        "description": "Иҷозат нест"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/photos": {
+            "get": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Рӯйхати аксҳо",
+                "operationId": "8e878cf68237e684e4180bf0e1761116",
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати аксҳо"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Илова кардани акс",
+                "operationId": "e21993f5b41f1c66ee580264d09c4cea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "photo",
+                                    "photoable_id",
+                                    "photoable_type"
+                                ],
+                                "properties": {
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "photoable_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "photoable_type": {
+                                        "type": "string",
+                                        "example": "App\\\\Models\\\\Product"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Акс илова шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/photos/{id}": {
+            "get": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Намоиши акс",
+                "operationId": "6a1d12e7081fa8f2a91f99ec6a54f7b7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маълумоти акс"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Навсозии акс",
+                "operationId": "17a87be745c5a720a5cac69a5e281e0e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "_method",
+                                    "photo"
+                                ],
+                                "properties": {
+                                    "_method": {
+                                        "type": "string",
+                                        "example": "PUT"
+                                    },
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Акс навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Нест кардани акс",
+                "operationId": "c3a6f386d5b7a7af20cd331c2b411891",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Акс нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Рӯйхати маҳсулотҳо",
+                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати маҳсулотҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "object"
+                                                    },
+                                                    "price": {
+                                                        "type": "number",
+                                                        "example": 500000
+                                                    },
+                                                    "description": {
+                                                        "type": "object"
+                                                    },
+                                                    "discounted_price": {
+                                                        "type": "number",
+                                                        "example": 450000
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Эҷоди маҳсулоти нав",
+                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id",
+                                    "name",
+                                    "price",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string",
+                                                "example": "Stol"
+                                            },
+                                            "ru": {
+                                                "type": "string",
+                                                "example": "Стол"
+                                            },
+                                            "tj": {
+                                                "type": "string",
+                                                "example": "Миз"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 500000
+                                    },
+                                    "description": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string"
+                                            },
+                                            "ru": {
+                                                "type": "string"
+                                            },
+                                            "tj": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Маҳсулот бомуваффақият сохта шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Намоиши як маҳсулот",
+                "operationId": "7ab21ddb713501f3d4c2914892c02a21",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и маҳсулот",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Муваффақ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "object"
+                                        },
+                                        "price": {
+                                            "type": "number",
+                                            "example": 500000
+                                        },
+                                        "description": {
+                                            "type": "object"
+                                        },
+                                        "discounted_price": {
+                                            "type": "number",
+                                            "example": 450000
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Навсозии маҳсулот",
+                "operationId": "6a7e11900844cd85cff66e662b82bd4c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и маҳсулот",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id",
+                                    "name",
+                                    "price",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string",
+                                                "example": "Stol"
+                                            },
+                                            "ru": {
+                                                "type": "string",
+                                                "example": "Стол"
+                                            },
+                                            "tj": {
+                                                "type": "string",
+                                                "example": "Миз"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 5000
+                                    },
+                                    "description": {
+                                        "properties": {
+                                            "uz": {
+                                                "type": "string"
+                                            },
+                                            "ru": {
+                                                "type": "string"
+                                            },
+                                            "tj": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Маҳсулот бомуваффақият навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Products"
                 ],
-                "summary": "Маҳсулотро нест кардан",
-                "operationId": "1a0a353d0842ff4f9347bb66ec53e3ea",
+                "summary": "Нест кардани маҳсулот",
+                "operationId": "e80a6ca46716acee6b47ea1ac91663c0",
                 "parameters": [
                     {
-                        "name": "product",
+                        "name": "id",
                         "in": "path",
+                        "description": "ID-и маҳсулот",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -474,16 +1925,75 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Нест шуд"
+                    "200": {
+                        "description": "Маҳсулот нест карда шуд"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/products/{product}/related": {
+        "/api/products/{id}/related": {
             "get": {
-                "summary": "Маҳсулотҳои алоқамандро гирифтан",
-                "operationId": "f67e57d49037e9a46a2c669d17aba21e",
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Маҳсулотҳои монанд",
+                "operationId": "b1e7dddc28816c180eaf0cc29b65f2e4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-и маҳсулот",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхат",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "object"
+                                            },
+                                            "price": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products/{product}/photos": {
+            "get": {
+                "tags": [
+                    "Product Photos"
+                ],
+                "summary": "Аксҳои маҳсулот",
+                "operationId": "03d20abd7fb40479de57cfc974506ed8",
                 "parameters": [
                     {
                         "name": "product",
@@ -496,20 +2006,998 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
+                        "description": "Рӯйхати аксҳо"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Product Photos"
+                ],
+                "summary": "Илова кардани акс ба маҳсулот",
+                "operationId": "a16fb2fd7a602b916efce05034375c8d",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "photos[]": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Аксҳо илова шуданд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products/{product}/photos/{photo}": {
+            "delete": {
+                "tags": [
+                    "Product Photos"
+                ],
+                "summary": "Нест кардани акси маҳсулот",
+                "operationId": "529470860027a829e8e68e7d8c87fca5",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Акс нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/reviews": {
+            "get": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Рӯйхати шарҳҳои корбар",
+                "operationId": "346169ce6ab0c633530a7cedc1a25fab",
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати шарҳҳо"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Эҷоди шарҳ",
+                "operationId": "154c71f5f72b459d998f5ea451bd4c96",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_id",
+                                    "rating"
+                                ],
+                                "properties": {
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "rating": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Маҳсулот хеле хуб аст"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Шарҳ сохта шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/reviews/{id}": {
+            "get": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Намоиши шарҳ",
+                "operationId": "a9949d3a965ed93ae30547c07eef7505",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маълумоти шарҳ"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Навсозии шарҳ",
+                "operationId": "17776becb9faf054b5c49bc83ad6c974",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rating": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Тағйир дода шуд"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Шарҳ навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Нест кардани шарҳ",
+                "operationId": "89986343b5dbd2b909c2764aeb7e4096",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Шарҳ нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Рӯйхати ролҳо",
+                "operationId": "77e3636d8592997ce9d6d27b50857a69",
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати ролҳо"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Эҷоди роль",
+                "operationId": "4a563842fbfcad237f63da43065fca3d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Роль сохта шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Намоиши роль",
+                "operationId": "7fb0667a295b7678a30353aa11739683",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маълумоти роль"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Навсозии роль",
+                "operationId": "786d6990093a8eb3a56931f19a827e43",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "manager"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Роль навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Нест кардани роль",
+                "operationId": "8285c46981c60ad600aa4077307aec04",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Роль нест карда шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/assign": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Таъин кардани роль ба корбар",
+                "operationId": "712a084c47f3fe638d88cfbfc6736c5c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Роль ба корбар дода шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/stats/orders-count": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Шумораи фармоишҳо",
+                "description": "Ин endpoint шумораи фармоишҳои пӯшидашударо дар давраи интихобшуда бармегардонад",
+                "operationId": "66eb974de5ed4d4dcb9e21ee1ae67c23",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Санаи оғоз (формат: YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Санаи анҷом (формат: YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Шумораи фармоишҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "integer",
+                                            "example": 120
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/stats/orders-sales-sum": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Ҷамъбасти фурӯш",
+                "description": "Ин endpoint маблағи умумии фармоишҳои пӯшидашударо бармегардонад",
+                "operationId": "1a6e4d3ebde369f92b620434222d5c4c",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Санаи оғоз",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Санаи анҷом",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маблағи умумӣ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "number",
+                                            "example": 5600.5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/stats/delivery-methods-ratio": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Тақсимоти усулҳои интиқол",
+                "description": "Ин endpoint фоиз ва шумораи фармоишҳоро аз рӯи усули интиқол бармегардонад",
+                "operationId": "77be0f870ee8210ff78daa773db37935",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Санаи оғоз",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Санаи анҷом",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Маълумот дар бораи усулҳои интиқол",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "object",
+                                                        "example": {
+                                                            "tj": "Курьер",
+                                                            "ru": "Курьер"
+                                                        }
+                                                    },
+                                                    "percentage": {
+                                                        "type": "number",
+                                                        "example": 45.5
+                                                    },
+                                                    "amount": {
+                                                        "type": "integer",
+                                                        "example": 50
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/stats/orders-count-by-days": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Шумораи фармоишҳо аз рӯи рӯз",
+                "description": "Ин endpoint шумораи фармоишҳоро барои ҳар рӯз дар давраи интихобшуда бармегардонад",
+                "operationId": "92436b954330458737a19906191bc5b5",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Санаи оғоз",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Санаи анҷом",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Рӯйхати рӯзҳо бо шумораи фармоишҳо",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "date": {
+                                                        "type": "string",
+                                                        "example": "2025-01-01"
+                                                    },
+                                                    "orders_count": {
+                                                        "type": "integer",
+                                                        "example": 15
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/statuses": {
+            "get": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "Рӯйхати статусҳо",
+                "operationId": "e96ea40c6f497546795df9ec612e1928",
+                "parameters": [
+                    {
+                        "name": "for",
+                        "in": "query",
+                        "description": "Филтр (order ва ғайра)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "Эҷоди статус",
+                "operationId": "85739a0412fc324e86e6b45af20c7f0c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "for"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "object",
+                                        "example": {
+                                            "tj": "Нав",
+                                            "ru": "Новый",
+                                            "uz": "Yangi"
+                                        }
+                                    },
+                                    "for": {
+                                        "type": "string",
+                                        "example": "order"
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "example": "new"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Сохта шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/statuses/{id}": {
+            "get": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "Намоиши статус",
+                "operationId": "ea554faff3dfcadd142b14010e8b3331",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "Навсозии статус",
+                "operationId": "7ba406b9e828f2ce3a0583d7c56583f6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "object",
+                                        "example": {
+                                            "tj": "Нав",
+                                            "ru": "Новый"
+                                        }
+                                    },
+                                    "for": {
+                                        "type": "string",
+                                        "example": "order"
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "example": "new"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Навсозӣ шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "Нест кардани статус",
+                "operationId": "4bcdd7d14d0707a62e62d2315c6149e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Нест шуд"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/statuses/{status}/orders": {
+            "post": {
+                "tags": [
+                    "Statuses/Orders"
+                ],
+                "summary": "Тағйири статуси фармоиш",
+                "description": "Статуси фармоишро ба статуси интихобшуда иваз мекунад",
+                "operationId": "59c4918736b9f315f1b1f0ccb18c251d",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "description": "ID статус",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "order_id"
+                                ],
+                                "properties": {
+                                    "order_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Статус иваз шуд",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "status changed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order ё Status ёфт нашуд"
+                    },
+                    "403": {
+                        "description": "Иҷозат нест"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/users": {
             "get": {
+                "tags": [
+                    "Users"
+                ],
                 "summary": "Рӯйхати корбаронро гирифтан",
                 "operationId": "c457726701591d1183b53aa71fc13441",
                 "responses": {
                     "200": {
-                        "description": "Муаффак"
+                        "description": "Муваффак"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -533,28 +3021,79 @@
                 },
                 "type": "object"
             }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
         }
     },
     "tags": [
         {
+            "name": "Users",
+            "description": "Корбарон"
+        },
+        {
             "name": "Auth",
             "description": "Аутентификация ва иҷозат"
+        },
+        {
+            "name": "Roles",
+            "description": "Ролҳо"
+        },
+        {
+            "name": "Permissions",
+            "description": "Иҷозатҳо"
+        },
+        {
+            "name": "Photos",
+            "description": "Аксҳо"
         },
         {
             "name": "Orders",
             "description": "Фармоишҳо"
         },
         {
+            "name": "Reviews",
+            "description": "Шарҳҳо"
+        },
+        {
+            "name": "Statuses",
+            "description": "Ҳолатҳо"
+        },
+        {
             "name": "Products",
             "description": "Маҳсулотҳо"
+        },
+        {
+            "name": "Discounts",
+            "description": "Тахфифҳо"
         },
         {
             "name": "Categories",
             "description": "Категорияҳо"
         },
         {
-            "name": "Attributes",
-            "description": "Атрибутҳо"
+            "name": "Product Photos",
+            "description": "Аксҳои маҳсулот"
+        },
+        {
+            "name": "Admin/Orders",
+            "description": "Admin/Orders"
+        },
+        {
+            "name": "CategoryProduct",
+            "description": "CategoryProduct"
+        },
+        {
+            "name": "Statistics",
+            "description": "Statistics"
+        },
+        {
+            "name": "Statuses/Orders",
+            "description": "Statuses/Orders"
         }
     ]
 }

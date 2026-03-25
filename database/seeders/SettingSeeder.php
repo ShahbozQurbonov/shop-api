@@ -8,64 +8,80 @@ use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $setting = Setting::create([
             'name' => [
                 'uz' => 'Til',
-                'ru' => 'Language'
+                'ru' => 'Язык',
+                'tj' => 'Забон'
             ],
             'type' => SettingType::SELECT->value,
         ]);
+
         $setting->values()->create([
             'name' => [
-                'uz' => 'Ozbekcha',
-                'ru' => 'Ozbekcha',
-            ]
-        ]);
-        $setting->values()->create([
-            'name' => [
-                'uz' => 'Ruscha',
-                'ru' => 'Ruscha',
+                'uz' => 'O‘zbekcha',
+                'ru' => 'Узбекский',
+                'tj' => 'Ӯзбекӣ',
             ]
         ]);
 
+        $setting->values()->create([
+            'name' => [
+                'uz' => 'Ruscha',
+                'ru' => 'Русский',
+                'tj' => 'Русӣ',
+            ]
+        ]);
+
+        $setting->values()->create([
+            'name' => [
+                'uz' => 'Tojikcha',
+                'ru' => 'Таджикский',
+                'tj' => 'Тоҷикӣ',
+            ]
+        ]);
 
         $setting = Setting::create([
             'name' => [
                 'uz' => 'Pul birligi',
-                'ru' => 'Pul birligi'
+                'ru' => 'Валюта',
+                'tj' => 'Асъор'
             ],
             'type' => SettingType::SELECT->value,
         ]);
+
         $setting->values()->create([
             'name' => [
-                'uz' => 'So\'m',
-                'ru' => 'Sum',
-            ]
-        ]);
-        $setting->values()->create([
-            'name' => [
-                'uz' => 'Dollar',
-                'ru' => 'Dollar',
+                'uz' => 'Somoni',
+                'ru' => 'Сомони',
+                'tj' => 'Сомонӣ',
             ]
         ]);
 
-        $setting = Setting::create([
+        $setting->values()->create([
             'name' => [
-                'uz' => 'Dark Mode',
-                'ru' => 'Dark Mode ru'
+                'uz' => 'Dollar',
+                'ru' => 'Доллар',
+                'tj' => 'Доллар',
+            ]
+        ]);
+
+        Setting::create([
+            'name' => [
+                'uz' => 'Tungi rejim',
+                'ru' => 'Тёмный режим',
+                'tj' => 'Ҳолати торик'
             ],
             'type' => SettingType::SWITCH->value,
         ]);
 
-        $setting = Setting::create([
+        Setting::create([
             'name' => [
-                'uz' => 'Xabarnomalar',
-                'ru' => 'Xabarnomalar ru'
+                'uz' => 'Bildirishnomalar',
+                'ru' => 'Уведомления',
+                'tj' => 'Огоҳиномаҳо'
             ],
             'type' => SettingType::SWITCH->value,
         ]);

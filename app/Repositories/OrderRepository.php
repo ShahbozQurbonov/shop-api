@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderRepository extends Repository

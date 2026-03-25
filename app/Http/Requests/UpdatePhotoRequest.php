@@ -11,7 +11,8 @@ class UpdatePhotoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
+        // return true;
     }
 
     /**
@@ -22,7 +23,7 @@ class UpdatePhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'photo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
         ];
     }
 }

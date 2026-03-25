@@ -20,8 +20,8 @@ class AssignRoleToUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "user_id" => "required",
-            "role_id" => "required"
+            "user_id" => "required|exists:users,id",
+            "role_id" => "required|exists:roles,id"
         ];
     }
 }

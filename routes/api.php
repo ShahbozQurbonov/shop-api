@@ -30,7 +30,7 @@ Route::post('permissions/assign', [PermissionController::class, 'assign']);
 Route::get('products/{product}/related', [ProductController::class, 'related']);
 
 
-
+// Route::middleware('auth:api')->group(function () {
 Route::apiResources([
     'users' => UserController::class,
     'roles' => RoleController::class,
@@ -39,20 +39,21 @@ Route::apiResources([
     'reviews' => ReviewController::class,
     'statuses' => StatusController::class,
     'products' => ProductController::class,
-    'settings' => SettingController::class,
+    'settings' => SettingController::class,     //
     'discounts' => DiscountController::class,
-    'favorites' => FavoriteController::class,
+    'favorites' => FavoriteController::class,   //
     'categories' => CategoryController::class,
     'permissions' => PermissionController::class,
-    'users.photos' => UserPhotoController::class,
-    'user-settings' => UserSettingController::class,
-    'payment-types' => PaymentTypeController::class,
-    'user-addresses' => UserAddressController::class,
+    'users.photos' => UserPhotoController::class,   //
+    'user-settings' => UserSettingController::class,    //
+    'payment-types' => PaymentTypeController::class,    //
+    'user-addresses' => UserAddressController::class,   //
     'statuses.orders' => StatusOrderController::class,
     'products.photos' => ProductPhotoContoller::class,
-    'products.reviews' => ProductReviewContoller::class,
-    'delivery-methods' => DeliveryMethodController::class,
-    'payment-card-types' => PaymentCardTypeController::class,
+    'products.reviews' => ProductReviewContoller::class,    //
+    'delivery-methods' => DeliveryMethodController::class,  //
+    'payment-card-types' => PaymentCardTypeController::class,   //
     'categories.products' => CategoryProductController::class,
-    'user-payment-cards' => UserPaymentCardsController::class,
+    'user-payment-cards' => UserPaymentCardsController::class,  //
 ]);
+// });

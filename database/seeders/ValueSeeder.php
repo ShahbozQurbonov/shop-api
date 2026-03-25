@@ -7,46 +7,54 @@ use Illuminate\Database\Seeder;
 
 class ValueSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $attribute = Attribute::find(1);
 
-        $attribute->values()->create([
-            "name" => [
-                "uz" => "Qizil",
-                "ru" => "Красный"
-            ]
-        ]);
-        $attribute->values()->create([
-            "name" => [
-                "uz" => "Qora",
-                "ru" => "Черный"
-            ]
-        ]);
-        $attribute->values()->create([
-            "name" => [
-                "uz" => "Jigarrang",
-                "ru" => "Коричневый"
-            ]
-        ]);
+        if ($attribute) {
+            $attribute->values()->create([
+                "name" => [
+                    "uz" => "Qizil",
+                    "ru" => "Красный",
+                    "tj" => "Сурх"
+                ]
+            ]);
 
+            $attribute->values()->create([
+                "name" => [
+                    "uz" => "Qora",
+                    "ru" => "Чёрный",
+                    "tj" => "Сиёҳ"
+                ]
+            ]);
+
+            $attribute->values()->create([
+                "name" => [
+                    "uz" => "Jigarrang",
+                    "ru" => "Коричневый",
+                    "tj" => "Қаҳваранг"
+                ]
+            ]);
+        }
 
         $attribute = Attribute::find(2);
 
-        $attribute->values()->create([
-            "name" => [
-                "uz" => "MDF",
-                "ru" => "МДФ"
-            ],
-        ]);
-        $attribute->values()->create([
-            "name" => [
-                "uz" => "LDSP",
-                "ru" => "ЛДСП"
-            ]
-        ]);
+        if ($attribute) {
+            $attribute->values()->create([
+                "name" => [
+                    "uz" => "MDF",
+                    "ru" => "МДФ",
+                    "tj" => "MDF"
+                ],
+            ]);
+
+            $attribute->values()->create([
+                "name" => [
+                    "uz" => "LDSP",
+                    "ru" => "ЛДСП",
+                    "tj" => "LDSP"
+                ]
+            ]);
+        }
     }
 }

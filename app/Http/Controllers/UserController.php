@@ -8,11 +8,18 @@ use OpenApi\Annotations as OA;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except(['index']);
+    }
+    
     /**
      * @OA\Get(
      *     path="/api/users",
      *     summary="Рӯйхати корбаронро гирифтан",
-     *     @OA\Response(response=200, description="Муаффак")
+     *     tags={"Users"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200, description="Муваффак")
      * )
      */
     public function index()

@@ -13,7 +13,7 @@ class Status extends Model
 
     public array $translatable = ["name"];
 
-    protected $fillable = ["name", "for"];
+    protected $fillable = ["name", "for", "code"];
 
 
     public function orders(): HasMany

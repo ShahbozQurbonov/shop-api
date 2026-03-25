@@ -5,29 +5,99 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdatePhotoRequest;
+use Illuminate\Support\Facades\Storage;
+use OpenApi\Annotations as OA;
 
 class PhotoController extends Controller
 {
+        public function __construct()
+        {
+            $this->middleware('auth:api')->except(['index', 'show']);
+        }
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/photos",
+     *     summary="Рӯйхати аксҳо",
+     *     tags={"Photos"},
+     *     security={{"bearerAuth":{}}},
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Рӯйхати аксҳо"
+     *     )
+     * )
      */
     public function index()
     {
-        //
+        return $this->response(Photo::latest()->get());
     }
 
 
+    /**
+     * @OA\Post(
+     *     path="/api/photos",
+     *     summary="Илова кардани акс",
+     *     tags={"Photos"},
+     *     security={{"bearerAuth":{}}},
+     * 
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"photo","photoable_id","photoable_type"},
+     *                 @OA\Property(property="photo", type="string", format="binary"),
+     *                 @OA\Property(property="photoable_id", type="integer", example=1),
+     *                 @OA\Property(property="photoable_type", type="string", example="App\\Models\\Product")
+     *             )
+     *         )
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Акс илова шуд"
+     *     )
+     * )
+     */
     public function store(StorePhotoRequest $request)
     {
-        //
+        $file = $request->file('photo');
+
+        $path = $file->store('photos', 'public');
+
+        $photo = Photo::create([
+            'full_name' => $file->getClientOriginalName(),
+            'path' => $path,
+            'photoable_id' => $request->photoable_id,
+            'photoable_type' => $request->photoable_type,
+        ]);
+
+        return $this->success('Акс илова шуд', $photo);
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/photos/{id}",
+     *     summary="Намоиши акс",
+     *     tags={"Photos"},
+     *     security={{"bearerAuth":{}}},
+     * 
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Маълумоти акс"
+     *     )
+     * )
      */
     public function show(Photo $photo)
     {
-        //
+        return $this->response($photo);
     }
 
     /**
@@ -39,18 +109,78 @@ class PhotoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     *     path="/api/photos/{id}",
+     *     summary="Навсозии акс",
+     *     tags={"Photos"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"_method","photo"},
+     *                 @OA\Property(property="_method", type="string", example="PUT"),
+     *                 @OA\Property(property="photo", type="string", format="binary")
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Акс навсозӣ шуд"
+     *     )
+     * )
      */
     public function update(UpdatePhotoRequest $request, Photo $photo)
     {
-        //
+        if ($request->hasFile('photo')) {
+            Storage::delete($photo->path);
+
+            $file = $request->file('photo');
+            $path = $file->store('photos', 'public');
+
+            $photo->update([
+                'full_name' => $file->getClientOriginalName(),
+                'path' => $path,
+            ]);
+        }
+
+        return $this->success('Акс навсозӣ шуд', $photo);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/photos/{id}",
+     *     summary="Нест кардани акс",
+     *     tags={"Photos"},
+     *     security={{"bearerAuth":{}}},
+     * 
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Акс нест карда шуд"
+     *     )
+     * )
      */
     public function destroy(Photo $photo)
     {
-        //
+        Storage::disk('public')->delete($photo->path);
+        $photo->delete();
+
+        return $this->success('Акс нест карда шуд');
     }
 }
