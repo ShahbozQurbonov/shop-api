@@ -13,7 +13,7 @@ class UserSettingPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class UserSettingPolicy
      */
     public function view(User $user, UserSetting $userSetting): bool
     {
-        //
+        return $user->id === $userSetting->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class UserSettingPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class UserSettingPolicy
      */
     public function update(User $user, UserSetting $userSetting): bool
     {
-        //
+        return $user->id === $userSetting->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class UserSettingPolicy
      */
     public function delete(User $user, UserSetting $userSetting): bool
     {
-        //
+        return $user->id === $userSetting->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class UserSettingPolicy
      */
     public function restore(User $user, UserSetting $userSetting): bool
     {
-        //
+        return $user->id === $userSetting->user_id;
     }
 
     /**

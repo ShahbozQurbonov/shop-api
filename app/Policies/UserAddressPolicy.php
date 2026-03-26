@@ -13,7 +13,7 @@ class UserAddressPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class UserAddressPolicy
      */
     public function view(User $user, UserAddress $userAddress): bool
     {
-        //
+        return $user->id === $userAddress->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class UserAddressPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class UserAddressPolicy
      */
     public function update(User $user, UserAddress $userAddress): bool
     {
-        //
+        return $user->id === $userAddress->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class UserAddressPolicy
      */
     public function delete(User $user, UserAddress $userAddress): bool
     {
-        //
+        return $user->id === $userAddress->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class UserAddressPolicy
      */
     public function restore(User $user, UserAddress $userAddress): bool
     {
-        //
+        return $user->id === $userAddress->user_id;
     }
 
     /**

@@ -11,7 +11,7 @@ class UpdateUserAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateUserAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
+            'region' => 'nullable|string',
+            'district' => 'nullable|string',
+            'street' => 'nullable|string',
+            'home' => 'nullable|string',
         ];
     }
 }
