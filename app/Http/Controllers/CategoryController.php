@@ -44,9 +44,9 @@ class CategoryController extends Controller
  *             required={"name"},
  *             @OA\Property(property="parent_id", type="integer", example=1),
  *             @OA\Property(property="name", type="object",
- *                 @OA\Property(property="uz", type="string", example="Stol"),
+ *                 @OA\Property(property="tj", type="string", example="Миз"),
  *                 @OA\Property(property="ru", type="string", example="Стол"),
- *                 @OA\Property(property="tj", type="string", example="Миз")
+ *                 @OA\Property(property="uz", type="string", example="Stol"),
  *             ),
  *             @OA\Property(property="icon", type="string", example="icon.png"),
  *             @OA\Property(property="order", type="integer", example=1)
@@ -110,9 +110,9 @@ public function store(StoreCategoryRequest $request)
      *         @OA\JsonContent(
      *             @OA\Property(property="parent_id", type="integer"),
      *             @OA\Property(property="name", type="object",
-     *                 @OA\Property(property="uz", type="string"),
+     *                 @OA\Property(property="tj", type="string"),
      *                 @OA\Property(property="ru", type="string"),
-     *                 @OA\Property(property="tj", type="string")
+     *                 @OA\Property(property="uz", type="string"),
      *             ),
      *             @OA\Property(property="icon", type="string"),
      *             @OA\Property(property="order", type="integer")

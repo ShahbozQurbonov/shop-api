@@ -12,76 +12,76 @@ class SettingSeeder extends Seeder
     {
         $setting = Setting::create([
             'name' => [
-                'uz' => 'Til',
+                'tj' => 'Забон',
                 'ru' => 'Язык',
-                'tj' => 'Забон'
+                'uz' => 'Til',
             ],
             'type' => SettingType::SELECT->value,
         ]);
 
         $setting->values()->create([
             'name' => [
-                'uz' => 'O‘zbekcha',
-                'ru' => 'Узбекский',
                 'tj' => 'Ӯзбекӣ',
+                'ru' => 'Узбекский',
+                'uz' => 'O‘zbekcha',
             ]
         ]);
 
         $setting->values()->create([
             'name' => [
-                'uz' => 'Ruscha',
-                'ru' => 'Русский',
                 'tj' => 'Русӣ',
+                'ru' => 'Русский',
+                'uz' => 'Ruscha',
             ]
         ]);
 
         $setting->values()->create([
             'name' => [
-                'uz' => 'Tojikcha',
-                'ru' => 'Таджикский',
                 'tj' => 'Тоҷикӣ',
+                'ru' => 'Таджикский',
+                'uz' => 'Tojikcha',
             ]
         ]);
 
         $setting = Setting::create([
             'name' => [
-                'uz' => 'Pul birligi',
+                'tj' => 'Асъор',
                 'ru' => 'Валюта',
-                'tj' => 'Асъор'
+                'uz' => 'Pul birligi',
             ],
             'type' => SettingType::SELECT->value,
         ]);
 
         $setting->values()->create([
             'name' => [
-                'uz' => 'Somoni',
-                'ru' => 'Сомони',
                 'tj' => 'Сомонӣ',
+                'ru' => 'Сомони',
+                'uz' => 'Somoni',
             ]
         ]);
 
         $setting->values()->create([
             'name' => [
-                'uz' => 'Dollar',
-                'ru' => 'Доллар',
                 'tj' => 'Доллар',
+                'ru' => 'Доллар',
+                'uz' => 'Dollar',
             ]
         ]);
 
         Setting::create([
             'name' => [
-                'uz' => 'Tungi rejim',
+                'tj' => 'Ҳолати торик',
                 'ru' => 'Тёмный режим',
-                'tj' => 'Ҳолати торик'
+                'uz' => 'Tungi rejim',
             ],
             'type' => SettingType::SWITCH->value,
         ]);
 
         Setting::create([
             'name' => [
-                'uz' => 'Bildirishnomalar',
+                'tj' => 'Огоҳиномаҳо',
                 'ru' => 'Уведомления',
-                'tj' => 'Огоҳиномаҳо'
+                'uz' => 'Bildirishnomalar',
             ],
             'type' => SettingType::SWITCH->value,
         ]);

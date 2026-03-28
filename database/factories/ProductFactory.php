@@ -12,17 +12,17 @@ class ProductFactory extends Factory
             'category_id' => fake()->numberBetween(1, 5),
 
             'name' => [
-                'uz' => fake()->words(3, true),
-                'ru' => fake()->words(3, true),
                 'tj' => fake()->words(3, true),
+                'ru' => fake()->words(3, true),
+                'uz' => fake()->words(3, true),
             ],
 
             'price' => fake()->numberBetween(50, 10000),
 
             'description' => [
-                'uz' => fake()->paragraph(),
-                'ru' => fake()->paragraph(),
                 'tj' => fake()->paragraph(),
+                'ru' => fake()->paragraph(),
+                'uz' => fake()->paragraph(),
             ],
         ];
     }

@@ -14,25 +14,25 @@ class ValueSeeder extends Seeder
         if ($attribute) {
             $attribute->values()->create([
                 "name" => [
-                    "uz" => "Qizil",
+                    "tj" => "Сурх",
                     "ru" => "Красный",
-                    "tj" => "Сурх"
+                    "uz" => "Qizil",
                 ]
             ]);
 
             $attribute->values()->create([
                 "name" => [
-                    "uz" => "Qora",
+                    "tj" => "Сиёҳ",
                     "ru" => "Чёрный",
-                    "tj" => "Сиёҳ"
+                    "uz" => "Qora",
                 ]
             ]);
 
             $attribute->values()->create([
                 "name" => [
-                    "uz" => "Jigarrang",
+                    "tj" => "Қаҳваранг",
                     "ru" => "Коричневый",
-                    "tj" => "Қаҳваранг"
+                    "uz" => "Jigarrang",
                 ]
             ]);
         }
@@ -42,17 +42,17 @@ class ValueSeeder extends Seeder
         if ($attribute) {
             $attribute->values()->create([
                 "name" => [
-                    "uz" => "MDF",
+                    "tj" => "MDF",
                     "ru" => "МДФ",
-                    "tj" => "MDF"
+                    "uz" => "MDF",
                 ],
             ]);
 
             $attribute->values()->create([
                 "name" => [
-                    "uz" => "LDSP",
+                    "tj" => "LDSP",
                     "ru" => "ЛДСП",
-                    "tj" => "LDSP"
+                    "uz" => "LDSP",
                 ]
             ]);
         }

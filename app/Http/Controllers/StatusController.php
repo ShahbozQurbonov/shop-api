@@ -119,7 +119,7 @@ class StatusController extends Controller
      *             @OA\Property(
      *                 property="name",
      *                 type="object",
-     *                 example={"tj":"Нав","ru":"Новый"}
+     *                 example={"tj":"Нав","ru":"Новый","uz":"Yangi"}
      *             ),
      *             @OA\Property(property="for", type="string", example="order"),
      *             @OA\Property(property="code", type="string", example="new")

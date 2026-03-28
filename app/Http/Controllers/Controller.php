@@ -64,7 +64,7 @@ class Controller extends BaseController
         return response()->json([
             'success' => true,
             'status' => 'success',
-            'message' => $message ?? 'operation successfull',
+            'message' => $message ?? 'Амалиёт бомуваффақият анҷом ёфт',
             'data' => $data,
         ]);
     }
@@ -74,7 +74,7 @@ class Controller extends BaseController
         return response()->json([
             'success' => false,
             'status' => 'error',
-            'message' => $message ?? 'error occured',
+            'message' => $message ?? 'Хатогӣ рух дод',
             'data' => $data,
         ], 400);
     }

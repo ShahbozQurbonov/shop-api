@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\DeliveryMethodController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPaymentCardsController;
 use App\Http\Controllers\UserPhotoController;
 use App\Http\Controllers\UserSettingController;
+use App\Http\Controllers\ValueController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('roles/assign', [RoleController::class, 'assign']);
@@ -46,7 +48,7 @@ Route::apiResources([
     'permissions' => PermissionController::class,
     'users.photos' => UserPhotoController::class,   //
     'user-settings' => UserSettingController::class,
-    'payment-types' => PaymentTypeController::class,    //
+    'payment-types' => PaymentTypeController::class,
     'user-addresses' => UserAddressController::class,
     'statuses.orders' => StatusOrderController::class,
     'products.photos' => ProductPhotoContoller::class,
@@ -55,5 +57,7 @@ Route::apiResources([
     'payment-card-types' => PaymentCardTypeController::class,   //
     'categories.products' => CategoryProductController::class,
     'user-payment-cards' => UserPaymentCardsController::class,
+    'attributes' => AttributeController::class,
+    'values' => ValueController::class,  //
 ]);
 // });

@@ -11,89 +11,89 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => [
-                'uz' => 'Stol',
+                'tj' => 'Миз',
                 'ru' => 'Стол',
-                'tj' => 'Миз'
+                'uz' => 'Stol',
             ],
         ]);
 
         Category::create([
             'name' => [
-                'uz' => 'Divan',
+                'tj' => 'Диван',
                 'ru' => 'Диван',
-                'tj' => 'Диван'
+                'uz' => 'Divan',
             ],
         ]);
 
         $category = Category::create([
             'name' => [
-                'uz' => 'Kreslo',
+                'tj' => 'Курсӣ',
                 'ru' => 'Кресло',
-                'tj' => 'Курсӣ'
+                'uz' => 'Kreslo',
             ],
         ]);
 
         $category->childCategories()->create([
             'name' => [
-                'uz' => 'Ofis',
+                'tj' => 'Идора',
                 'ru' => 'Офис',
-                'tj' => 'Идора'
+                'uz' => 'Ofis',
             ],
         ]);
 
         $childCategory = $category->childCategories()->create([
             'name' => [
-                'uz' => 'Geymer',
+                'tj' => 'Бозӣ',
                 'ru' => 'Игровое',
-                'tj' => 'Бозӣ'
+                'uz' => 'Geymer',
             ],
         ]);
 
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'RGB',
+                'tj' => 'RGB',
                 'ru' => 'RGB',
-                'tj' => 'RGB'
+                'uz' => 'RGB',
             ],
         ]);
 
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'Ayollar uchun',
+                'tj' => 'Барои занон',
                 'ru' => 'Женское',
-                'tj' => 'Барои занон'
+                'uz' => 'Ayollar uchun',
             ],
         ]);
 
         $childCategory->childCategories()->create([
             'name' => [
-                'uz' => 'Qora',
+                'tj' => 'Сиёҳ',
                 'ru' => 'Чёрный',
-                'tj' => 'Сиёҳ'
+                'uz' => 'Qora',
             ],
         ]);
 
         $category->childCategories()->create([
             'name' => [
-                'uz' => 'Yumshoq',
+                'tj' => 'Нарм',
                 'ru' => 'Мягкое',
-                'tj' => 'Нарм'
+                'uz' => 'Yumshoq',
             ],
         ]);
 
         Category::create([
             'name' => [
-                'uz' => 'Yotoq',
+                'tj' => 'Кат',
                 'ru' => 'Кровать',
-                'tj' => 'Кат'
+                'uz' => 'Yotoq',
             ],
         ]);
 
         Category::create([
             'name' => [
-                'uz' => 'Stul',
+                'tj' => 'Курсӣ',
                 'ru' => 'Стул',
-                'tj' => 'Курсӣ'
+                'uz' => 'Stul',
             ],
         ]);
     }

@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Admin',
             'email' => 'admin@gmail.com',
             'phone' => '+992900000000',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('passworD1'),
         ]);
         $user->assignRole('admin');
 
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Qobilova',
             'email' => 'setora@gmail.com',
             'phone' => '+992901234567',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('passworD1'),
         ]);
         $user->assignRole('editor');
 
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Eshqobilov',
             'email' => 'sanjar@gmail.com',
             'phone' => '+992911112233',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('passworD1'),
         ]);
         $user->assignRole('shop-manager');
 
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Toirova',
             'email' => 'jamila@gmail.com',
             'phone' => '+992935556677',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('passworD1'),
         ]);
         $user->assignRole('helpdesk-support');
 
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Qobilov',
             'email' => 'fazliddin@gmail.com',
             'phone' => '+992987654321',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('passworD1'),
         ]);
         $user->assignRole('customer');
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdatePhotoRequest;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use OpenApi\Annotations as OA;
 
@@ -12,7 +14,8 @@ class PhotoController extends Controller
 {
         public function __construct()
         {
-            $this->middleware('auth:api')->except(['index', 'show']);
+            $this->middleware('auth:api');
+            $this->authorizeResource(Photo::class, 'photo');
         }
     /**
      * @OA\Get(
@@ -48,7 +51,12 @@ class PhotoController extends Controller
      *                 required={"photo","photoable_id","photoable_type"},
      *                 @OA\Property(property="photo", type="string", format="binary"),
      *                 @OA\Property(property="photoable_id", type="integer", example=1),
-     *                 @OA\Property(property="photoable_type", type="string", example="App\\Models\\Product")
+     *                 @OA\Property(
+     *                     property="photoable_type",
+     *                     type="string",
+     *                     enum={"product","user"},
+     *                     example="product"
+     *                 )
      *             )
      *         )
      *     ),
@@ -61,18 +69,39 @@ class PhotoController extends Controller
      */
     public function store(StorePhotoRequest $request)
     {
-        $file = $request->file('photo');
+        $typeMap = [
+            'product' => Product::class,
+            'user' => User::class,
+        ];
 
+        if (!isset($typeMap[$request->photoable_type])) {
+            return response()->json([
+                'message' => 'Invalid photoable_type'
+            ], 422);
+        }
+
+        $photoableType = $typeMap[$request->photoable_type];
+
+        // ❗ check model exists
+        $photoable = $photoableType::find($request->photoable_id);
+
+        if (!$photoable) {
+            return $this->error('Маълумоти дархостшуда ёфт нашуд', 404);
+    }
+
+        // 📸 upload file
+        $file = $request->file('photo');
         $path = $file->store('photos', 'public');
 
+        // 💾 save
         $photo = Photo::create([
             'full_name' => $file->getClientOriginalName(),
             'path' => $path,
-            'photoable_id' => $request->photoable_id,
-            'photoable_type' => $request->photoable_type,
+            'photoable_id' => $photoable->id,
+            'photoable_type' => $photoableType,
         ]);
 
-        return $this->success('Акс илова шуд', $photo);
+        return $this->success('Акс бо муваффақият илова шуд', $photo);
     }
 
     /**

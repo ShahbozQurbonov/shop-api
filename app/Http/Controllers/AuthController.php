@@ -32,21 +32,21 @@ class AuthController extends Controller
     *         in="query",
     *         required=true,
     *         description="Почтаи электронӣ",
-    *         @OA\Schema(type="string", format="email", example="user@example.com")
+    *         @OA\Schema(type="string", format="email", example="user@gmail.com")
     *     ),
     *     @OA\Parameter(
     *         name="password",
     *         in="query",
     *         required=true,
     *         description="Рамз",
-    *         @OA\Schema(type="string", format="password", example="12345678")
+    *         @OA\Schema(type="string", format="password", example="password")
     *     ),
     * 
     *     @OA\Response(
     *         response=200,
     *         description="Воридшавӣ бомуваффақият анҷом ёфт",
     *         @OA\JsonContent(
-    *             @OA\Property(property="token", type="string", example="1|abcdefg123456")
+    *             @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiN2VlNWM0OTBiZGI2ODkxNmNkNmJiOTUxZGY0NzVhN2NhYjA3MjBmM2RmOGY4ZmQwODJhMWY3OTc1YWI0MDAyMGQxMTFhYTdhYzcyZTkwZWIiLCJpYXQiOjE3NzQ2MDY0MjEuOTIwMDIzLCJuYmYiOjE3NzQ2MDY0MjEuOTIwMDI4LCJleHAiOjE4MDYxNDI0MjEuOTEwMzMzLCJzdWIiOiIxOCIsInNjb3BlcyI6W119.SJrtrc1KcMYGJKH2aIoVZZsgeMJEx1_PBHrCpJ9_XVITrtcnHG-bPoDMO4WVR83nxWi6QdcsQgEiJShF-Pi1UJNHZVOJO9JrgA4KHVAiIeAJfm0gugbyAObwpqwxBCUC_zxqBfUWsjYBqa8QTumraZX2cQ3IvmTXP40IjI8mgBWAlME77RRLIwvJqI4dCs0PnL7u36DDSNCJwHAkPZcYUN7Uyj3Xydms2SdGvJC217tTqemO2GaNeTaMKfNsZ5qDLN5uKNZ5T3v93hpiYovJV54QyVUIm9gItCdCaG2TOJ9yFmB3_9yBGcQvbAAHjRU66nby6NTt6jcCSO69COD0dbnUXn5KvrdnX5m0jRLmrwm0pxN7AprMo5gBnd9RkpmimSoTMuvU5eE8uoNBbDFTbkzPjyIZ6TV84sWGp1vEL1huavMo5MTWjx-eAmLVhepLIqqW2_SOvbhxBEaSTaXfoG-Y9aHAQolkHF6gKwbG4k9f1KsJd5r6CsdWUuiMclUgwr9vpX24oeLRMPq_GtfZE5PNLqwnizbCQDYQVba5Rm9TaQfTc0eC8-i1JnXhPjUoVDp2mN5CePUd_ZzH5jYMA2amVk05lwYFiJu-vzEZlvJNOWaZG0e2CsFhICOiKHk8yjR9HoTeD-LvaZv3LGJGBC3Y5F4Gyu8ch8bxPmCN2P0")
     *         )
     *     ),
     *     @OA\Response(
@@ -64,14 +64,17 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            throw ValidationException::withMessages([
+                'email' => ['Email ё password нодуруст аст']
+            ]);
         }
         $user->tokens()->delete();
 
         $token = $user->createToken('authToken')->accessToken;
 
         return $this->success('ok', [
-            'token' => $token
+            'token' => $token,
+            'user' => new UserResource($user)
         ]);
     }
     /**
@@ -83,90 +86,76 @@ class AuthController extends Controller
      *     tags={"Auth"},
      *     @OA\Response(
      *         response=200,
-     *         description="Берун рафтани муваффақ"
+     *         description="Шумо бо муваффақият аз система баромадед"
      *     ),
      *     @OA\Response(response=401, description="Unauthorized")
      * )
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        $user = auth()->user();
+        $request->user()->token()->revoke();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
-        }
-
-        $user->token()->revoke();
-
-        return $this->success('user logged out');
+        return response()->json([
+            'success' => true,
+            'message' => 'Шумо бо муваффақият аз система баромадед'
+        ]);
     }
-
+    
     /**
      * @OA\Post(
      *     path="/api/register",
      *     summary="Ба қайд гирифтан",
      *     description="Эҷод кардани корбари нав",
      *     tags={"Auth"},
-     * 
-     *     @OA\Parameter(
-     *         name="first_name",
-     *         in="query",
+     *
+     *     @OA\RequestBody(
      *         required=true,
-     *         description="Ном",
-     *         @OA\Schema(type="string", example="Ali")
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"first_name","last_name","email","phone","password","password_confirmation"},
+     *
+     *                 @OA\Property(property="first_name", type="string", example="Ali"),
+     *                 @OA\Property(property="last_name", type="string", example="Ahmadov"),
+     *                 @OA\Property(property="email", type="string", example="user@gmail.com"),
+     *                 @OA\Property(property="phone", type="string", example="+992924002010"),
+     *                 @OA\Property(property="password", type="string", example="Password1"),
+     *                 @OA\Property(property="password_confirmation", type="string", example="Password1"),
+     *
+     *                 @OA\Property(
+     *                     property="photo",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Акс (jpg, jpeg, png, max: 1MB)"
+     *                 )
+     *             )
+     *         )
      *     ),
-     *     @OA\Parameter(
-     *         name="last_name",
-     *         in="query",
-     *         required=true,
-     *         description="Насаб",
-     *         @OA\Schema(type="string", example="Ahmadov")
-     *     ),
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         required=true,
-     *         description="Почтаи электронӣ",
-     *         @OA\Schema(type="string", format="email", example="user@example.com")
-     *     ),
-     *     @OA\Parameter(
-     *         name="phone",
-     *         in="query",
-     *         required=true,
-     *         description="Рақами телефон",
-     *         @OA\Schema(type="string", example="+992900000000")
-     *     ),
-     *     @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         required=true,
-     *         description="Рамз",
-     *         @OA\Schema(type="string", example="12345678")
-     *     ),
-     *     @OA\Parameter(
-     *         name="password_confirmation",
-     *         in="query",
-     *         required=true,
-     *         description="Тасдиқи рамз",
-     *         @OA\Schema(type="string", example="12345678")
-     *     ),
-     * 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Ба қайд гирифтан муваффақ шуд",
      *         @OA\JsonContent(
-     *             @OA\Property(property="token", type="string", example="1|abcdefg123456")
+     *             @OA\Property(property="message", type="string", example="Корбар бо муваффақият сохта шуд"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="token", type="string", example="access_token_here"),
+     *                 @OA\Property(property="user", type="object")
+     *             )
      *         )
      *     ),
-     *     @OA\Response(response=422, description="Хатогии валидация")
+     *
+     *     @OA\Response(
+     *         response=422,
+     *         description="Хатогии валидация"
+     *     )
      * )
      */
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = Hash::make($request->password);
+        $data['password'] = Hash::make($data['password']);
 
         $user = User::create($data);
         $user->assignRole('customer');
@@ -176,69 +165,48 @@ class AuthController extends Controller
         $token = $user->createToken('authToken')->accessToken;
 
         return $this->success('user created', [
-            'token' => $token
+            'token' => $token,
+            'user' => new UserResource($user)
         ]);
     }
 
     /**
      * @OA\Post(
-     *     path="/api/change-password",
-     *     summary="Паролро иваз кардан",
-     *     description="Тағйир додани пароли корбар",
-     *     tags={"Auth"},
-     * 
-     *     @OA\Parameter(
-     *         name="Authorization",
-     *         in="header",
-     *         required=true,
-     *         description="Bearer token",
-     *         @OA\Schema(type="string", example="Bearer 1|abcdefg123456")
-     *     ),
-     * 
-     *     @OA\Parameter(
-     *         name="current_password",
-     *         in="query",
-     *         required=true,
-     *         description="Пароли ҳозира",
-     *         @OA\Schema(type="string", example="12345678")
-     *     ),
-     *     @OA\Parameter(
-     *         name="new_password",
-     *         in="query",
-     *         required=true,
-     *         description="Пароли нав",
-     *         @OA\Schema(type="string", example="87654321")
-     *     ),
-     *     @OA\Parameter(
-     *         name="new_password_confirmation",
-     *         in="query",
-     *         required=true,
-     *         description="Тасдиқи пароли нав",
-     *         @OA\Schema(type="string", example="87654321")
-     *     ),
-     * 
-     *     @OA\Response(
-     *         response=200,
-     *         description="Парол бомуваффақият иваз шуд"
-     *     ),
-     *     @OA\Response(response=422, description="Хатогии валидация")
-     * )
+     *    path="/api/change-password",
+     *    summary="Паролро иваз кардан",
+     *    description="Тағйир додани пароли корбар",
+     *    security={{"bearerAuth":{}}},
+     *    tags={"Auth"},
+     *
+     *    @OA\RequestBody(
+     *        required=true,
+     *        @OA\JsonContent(
+     *            required={"current_password","new_password","new_password_confirmation"},
+     *            @OA\Property(property="current_password", type="string", example="Password12"),
+     *            @OA\Property(property="new_password", type="string", example="Password123"),
+     *            @OA\Property(property="new_password_confirmation", type="string", example="Password123")
+     *        )
+     *    ),
+     *
+     *    @OA\Response(
+     *        response=200,
+     *        description="Парол бомуваффақият иваз шуд"
+     *    ),
+     *    @OA\Response(response=422, description="Хатогии валидация")
+     *)
      */
-    public function changePassword()
+    public function changePassword(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'current_password' => 'required|string',
-            'new_password' => 'required|string|confirmed',
+            'new_password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[0-9]/',
         ]);
-
-        $user = auth()->user();
+        
+        $user = $request->user();
 
         if (!Hash::check($data['current_password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'current_password' => ['Пароли ҳозира нодуруст аст.'],
-            ]);
+            return $this->error('Пароли ҳозира нодуруст аст.');
         }
-
         $user->password = Hash::make($data['new_password']);
         $user->save();
 
@@ -252,6 +220,7 @@ class AuthController extends Controller
      *     summary="Маълумоти корбар",
      *     description="Гирифтани маълумоти корбари ҷорӣ",
      *     tags={"Auth"},
+     *    security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Муваффақ",

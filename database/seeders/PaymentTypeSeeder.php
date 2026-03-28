@@ -11,41 +11,41 @@ class PaymentTypeSeeder extends Seeder
     {
         PaymentType::create([
             'name' => [
-                'uz' => 'Naqd',
+                'tj' => 'Нақдӣ',
                 'ru' => 'Наличные',
-                'tj' => 'Нақдӣ'
+                'uz' => 'Naqd',
             ]
         ]);
 
         PaymentType::create([
             'name' => [
-                'uz' => 'Terminal',
+                'tj' => 'Терминал',
                 'ru' => 'Терминал',
-                'tj' => 'Терминал'
+                'uz' => 'Terminal',
             ]
         ]);
 
         PaymentType::create([
             'name' => [
-                'uz' => 'Korti Milli',
+                'tj' => 'Корти Миллӣ',
                 'ru' => 'Корти Милли',
-                'tj' => 'Корти Миллӣ'
+                'uz' => 'Korti Milli',
             ]
         ]);
 
         PaymentType::create([
             'name' => [
-                'uz' => 'Visa',
+                'tj' => 'Visa',
                 'ru' => 'Visa',
-                'tj' => 'Visa'
+                'uz' => 'Visa',
             ]
         ]);
 
         PaymentType::create([
             'name' => [
-                'uz' => 'Mastercard',
+                'tj' => 'Mastercard',
                 'ru' => 'Mastercard',
-                'tj' => 'Mastercard'
+                'uz' => 'Mastercard',
             ]
         ]);
     }

@@ -13,10 +13,10 @@ use Illuminate\Support\LazyCollection;
 
 class StatsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
     * @OA\Get(
@@ -143,7 +143,7 @@ class StatsController extends Controller
     *                 property="data",
     *                 type="array",
     *                 @OA\Items(
-    *                     @OA\Property(property="name", type="object", example={"tj":"Курьер","ru":"Курьер"}),
+    *                     @OA\Property(property="name", type="object", example={"tj":"Курьер","ru":"Курьер","uz":"Kuryer"}),
     *                     @OA\Property(property="percentage", type="number", example=45.5),
     *                     @OA\Property(property="amount", type="integer", example=50)
     *                 )

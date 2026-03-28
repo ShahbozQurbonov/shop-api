@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends JsonResource
 {
@@ -21,8 +22,16 @@ class UserResource extends JsonResource
             "email" => $this->email,
             "phone" => $this->phone,
             "settings" => UserSettingResource::collection($this->settings),
-            "roles" => $this->getRoleNames(),
-            "photo" => $this->photos()->exists() ? Storage::url($this->photos()->first()->path) : null,
+            // "roles" => $this->getRoleNames(),
+            "roles" => $this->getRoleNames()->map(function ($roleName) {
+            $role = Role::where('name', $roleName)->first();
+
+            return [
+                'name' => $roleName,
+                'permissions' => $role ? $role->permissions->pluck('name') : []
+            ];
+        }),
+            "photo" => PhotoResource::collection($this->photos),
             "created_at" => $this->created_at,
         ];
     }

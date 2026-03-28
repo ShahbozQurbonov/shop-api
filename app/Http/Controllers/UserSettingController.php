@@ -37,14 +37,14 @@ class UserSettingController extends Controller
     *                     @OA\Property(
     *                         property="setting",
     *                         type="object",
-    *                         example={"id":1,"name":{"tj":"Забон","ru":"Язык"}}
+    *                         example={"id":1,"name":{"tj":"Забон","ru":"Язык","uz":"Til"},"type":"select"}
     *                     ),
     *
     *                     @OA\Property(
     *                         property="value",
     *                         type="object",
     *                         nullable=true,
-    *                         example={"id":1,"name":{"tj":"Тоҷикӣ"}}
+    *                         example={"id":1,"name":{"tj":"Тоҷикӣ","ru":"Таджикский","uz":"Tojik"}}
     *                     ),
     *
     *                     @OA\Property(property="switch", type="boolean", example=true)

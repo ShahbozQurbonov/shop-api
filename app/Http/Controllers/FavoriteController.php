@@ -39,7 +39,7 @@ class FavoriteController extends Controller
      *                     @OA\Property(
      *                         property="name",
      *                         type="object",
-     *                         example={"uz":"sed doloribus","ru":"reiciendis","tj":"consectetur"}
+     *                         example={"tj":"consectetur","ru":"reiciendis","uz":"sed doloribus"}
      *                     ),
      *
      *                     @OA\Property(property="price", type="number", example=5792),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
@@ -10,7 +11,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['index']);
+        $this->middleware('auth:api');
     }
     
     /**
@@ -24,6 +25,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->response(User::all());
+        return $this->response(UserResource::collection(User::all()));
     }
 }

@@ -59,15 +59,15 @@ class ProductController extends Controller
      *             required={"category_id","name","price","description"},
      *             @OA\Property(property="category_id", type="integer", example=1),
      *             @OA\Property(property="name", type="object",
-     *                 @OA\Property(property="uz", type="string", example="Stol"),
+     *                 @OA\Property(property="tj", type="string", example="Миз"),
      *                 @OA\Property(property="ru", type="string", example="Стол"),
-     *                 @OA\Property(property="tj", type="string", example="Миз")
+     *                 @OA\Property(property="uz", type="string", example="Stol"),
      *             ),
      *             @OA\Property(property="price", type="number", example=500000),
      *             @OA\Property(property="description", type="object",
-     *                 @OA\Property(property="uz", type="string"),
+     *                 @OA\Property(property="tj", type="string"),
      *                 @OA\Property(property="ru", type="string"),
-     *                 @OA\Property(property="tj", type="string")
+     *                 @OA\Property(property="uz", type="string"),
      *             )
      *         )
      *     ),
@@ -114,6 +114,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if(!$product) {
+            return $this->error('Product not found');
+        }
         return new ProductResource($product);
     }
 
@@ -138,15 +141,15 @@ class ProductController extends Controller
      *             required={"category_id","name","price","description"},
      *             @OA\Property(property="category_id", type="integer", example=1),
      *             @OA\Property(property="name", type="object",
-     *                 @OA\Property(property="uz", type="string", example="Stol"),
+     *                 @OA\Property(property="tj", type="string", example="Миз"),
      *                 @OA\Property(property="ru", type="string", example="Стол"),
-     *                 @OA\Property(property="tj", type="string", example="Миз")
+     *                 @OA\Property(property="uz", type="string", example="Stol"),
      *             ),
      *             @OA\Property(property="price", type="number", example=5000),
      *             @OA\Property(property="description", type="object",
-     *                 @OA\Property(property="uz", type="string"),
+     *                 @OA\Property(property="tj", type="string"),
      *                 @OA\Property(property="ru", type="string"),
-     *                 @OA\Property(property="tj", type="string")
+     *                 @OA\Property(property="uz", type="string"),
      *             )
      *         )
      *     ),

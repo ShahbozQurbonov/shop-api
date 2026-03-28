@@ -19,7 +19,7 @@ class UpdateAttributeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('attribute:update');
     }
 
     /**
@@ -30,7 +30,7 @@ class UpdateAttributeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|string|max:255',
         ];
     }
 }

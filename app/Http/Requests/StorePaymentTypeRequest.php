@@ -11,7 +11,7 @@ class StorePaymentTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('payment-type:create');
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePaymentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|array',
+            'name.tj' => 'required|string',
+            'name.ru' => 'required|string',
+            'name.uz' => 'required|string',
         ];
     }
 }
