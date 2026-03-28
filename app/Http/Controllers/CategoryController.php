@@ -27,7 +27,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return $this->response(Category::all());
+        return $this->response(
+            CategoryResource::collection(
+                Category::query()
+                    ->whereNull('parent_id')
+                    ->with([
+                        'childCategories.childCategories',
+                    ])
+                    ->withCount('products')
+                    ->orderBy('id')
+                    ->get()
+            )
+        );
     }
 
 
@@ -88,7 +99,11 @@ public function store(StoreCategoryRequest $request)
      */
     public function show(Category $category)
     {
-        return $this->response(new CategoryResource($category));
+        return $this->response(
+            new CategoryResource(
+                $category->load(['childCategories.childCategories'])->loadCount('products')
+            )
+        );
     }
 
     /**

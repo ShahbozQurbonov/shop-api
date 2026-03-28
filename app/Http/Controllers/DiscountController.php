@@ -39,7 +39,7 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        return $this->response(Discount::all());
+        return $this->response(Discount::with('product')->latest()->get());
     }
 
     /**
@@ -80,7 +80,7 @@ class DiscountController extends Controller
 
         $discount = Discount::create($request->validated());
 
-        return $this->success('discount created', $discount);
+        return $this->success('discount created', $discount->load('product'));
     }
 
      /**
@@ -146,7 +146,7 @@ class DiscountController extends Controller
     {
         $discount->update($request->validated());
 
-        return $this->success('Навсозӣ шуд');
+        return $this->success('Навсозӣ шуд', $discount->fresh()->load('product'));
     }
 
      /**

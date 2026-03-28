@@ -93,7 +93,7 @@ class PaymentTypeController extends Controller
      *         @OA\Schema(type="integer", example=1)
      *     ),
      *
-     *     @OA\Response(response=200, description="OK")
+     *     @OA\Response(response=200, description="Муваффақ")
      * )
      */
     public function show(PaymentType $paymentType)
@@ -125,7 +125,7 @@ class PaymentTypeController extends Controller
      *         )
      *     ),
      *
-     *     @OA\Response(response=200, description="Updated")
+     *     @OA\Response(response=200, description="Навсозӣ шуд")
      * )
      */
     public function update(UpdatePaymentTypeRequest $request, PaymentType $paymentType)
@@ -149,7 +149,7 @@ class PaymentTypeController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *
-     *     @OA\Response(response=200, description="Deleted")
+     *     @OA\Response(response=200, description="Нест карда шуд")
      * )
      */
     public function destroy(PaymentType $paymentType)

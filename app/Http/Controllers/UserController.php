@@ -25,6 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        abort_unless(auth()->user()->can('user:viewAny'), 403);
+
         return $this->response(UserResource::collection(User::all()));
     }
 }

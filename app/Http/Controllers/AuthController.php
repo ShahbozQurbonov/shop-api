@@ -55,7 +55,7 @@ class AuthController extends Controller
     *     ),
     *     @OA\Response(
     *         response=401,
-    *         description="Email ё password нодуруст аст"
+    *         description="Почтаи электронӣ ё рамз нодуруст аст"
     *     )
     * )
     */
@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Email ё password нодуруст аст']
+                'email' => ['Почтаи электронӣ ё рамз нодуруст аст']
             ]);
         }
         $user->tokens()->delete();
@@ -88,7 +88,7 @@ class AuthController extends Controller
      *         response=200,
      *         description="Шумо бо муваффақият аз система баромадед"
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Шумо ба система ворид нашудаед")
      * )
      */
     public function logout(Request $request)
@@ -231,7 +231,7 @@ class AuthController extends Controller
      *             @OA\Property(property="email", type="string", example="user@example.com")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Шумо ба система ворид нашудаед")
      * )
      */
     public function user()

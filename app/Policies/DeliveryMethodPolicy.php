@@ -13,7 +13,7 @@ class DeliveryMethodPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->can('delivery-method:viewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class DeliveryMethodPolicy
      */
     public function view(User $user, DeliveryMethod $deliveryMethod): bool
     {
-        //
+        return $user->can('delivery-method:view');
     }
 
     /**
@@ -29,7 +29,7 @@ class DeliveryMethodPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->can('delivery-method:create');
     }
 
     /**
@@ -37,7 +37,7 @@ class DeliveryMethodPolicy
      */
     public function update(User $user, DeliveryMethod $deliveryMethod): bool
     {
-        //
+        return $user->can('delivery-method:update');
     }
 
     /**
@@ -45,7 +45,7 @@ class DeliveryMethodPolicy
      */
     public function delete(User $user, DeliveryMethod $deliveryMethod): bool
     {
-        //
+        return $user->can('delivery-method:delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class DeliveryMethodPolicy
      */
     public function restore(User $user, DeliveryMethod $deliveryMethod): bool
     {
-        //
+        return $user->can('delivery-method:restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class DeliveryMethodPolicy
      */
     public function forceDelete(User $user, DeliveryMethod $deliveryMethod): bool
     {
-        //
+        return false;
     }
 }

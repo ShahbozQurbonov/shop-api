@@ -11,7 +11,7 @@ class StorePaymentCardTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->hasRole('admin') || $this->user()?->hasRole('shop-manager');
     }
 
     /**
@@ -22,7 +22,9 @@ class StorePaymentCardTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:100|unique:payment_card_types,code',
+            'icon' => 'nullable|string|max:255',
         ];
     }
 }

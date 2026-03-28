@@ -78,7 +78,7 @@ class UserPaymentCardsController extends Controller
      *         description="Илова шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="card added")
+     *             @OA\Property(property="message", type="string", example="Корти пардохт бо муваффақият илова шуд")
      *         )
      *     )
      * )
@@ -104,7 +104,7 @@ class UserPaymentCardsController extends Controller
      *         @OA\Schema(type="integer", example=1)
      *     ),
      *
-     *     @OA\Response(response=200, description="OK")
+     *     @OA\Response(response=200, description="Муваффақ")
      * )
      */
     public function show(UserPaymentCards $user_payment_card)
@@ -131,7 +131,7 @@ class UserPaymentCardsController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *
-     *     @OA\Response(response=200, description="Deleted")
+     *     @OA\Response(response=200, description="Нест карда шуд")
      * )
      */
     public function destroy(UserPaymentCards $user_payment_card)

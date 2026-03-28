@@ -9,92 +9,26 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        Category::create([
-            'name' => [
-                'tj' => 'Миз',
-                'ru' => 'Стол',
-                'uz' => 'Stol',
-            ],
-        ]);
+        foreach ($this->categories() as $category) {
+            Category::create([
+                'name' => $category,
+            ]);
+        }
+    }
 
-        Category::create([
-            'name' => [
-                'tj' => 'Диван',
-                'ru' => 'Диван',
-                'uz' => 'Divan',
-            ],
-        ]);
-
-        $category = Category::create([
-            'name' => [
-                'tj' => 'Курсӣ',
-                'ru' => 'Кресло',
-                'uz' => 'Kreslo',
-            ],
-        ]);
-
-        $category->childCategories()->create([
-            'name' => [
-                'tj' => 'Идора',
-                'ru' => 'Офис',
-                'uz' => 'Ofis',
-            ],
-        ]);
-
-        $childCategory = $category->childCategories()->create([
-            'name' => [
-                'tj' => 'Бозӣ',
-                'ru' => 'Игровое',
-                'uz' => 'Geymer',
-            ],
-        ]);
-
-        $childCategory->childCategories()->create([
-            'name' => [
-                'tj' => 'RGB',
-                'ru' => 'RGB',
-                'uz' => 'RGB',
-            ],
-        ]);
-
-        $childCategory->childCategories()->create([
-            'name' => [
-                'tj' => 'Барои занон',
-                'ru' => 'Женское',
-                'uz' => 'Ayollar uchun',
-            ],
-        ]);
-
-        $childCategory->childCategories()->create([
-            'name' => [
-                'tj' => 'Сиёҳ',
-                'ru' => 'Чёрный',
-                'uz' => 'Qora',
-            ],
-        ]);
-
-        $category->childCategories()->create([
-            'name' => [
-                'tj' => 'Нарм',
-                'ru' => 'Мягкое',
-                'uz' => 'Yumshoq',
-            ],
-        ]);
-
-        Category::create([
-            'name' => [
-                'tj' => 'Кат',
-                'ru' => 'Кровать',
-                'uz' => 'Yotoq',
-            ],
-        ]);
-
-        Category::create([
-            'name' => [
-                'tj' => 'Курсӣ',
-                'ru' => 'Стул',
-                'uz' => 'Stul',
-            ],
-        ]);
+    private function categories(): array
+    {
+        return [
+            ['tj' => 'Смартфон', 'ru' => 'Смартфон', 'uz' => 'Smartfon'],
+            ['tj' => 'Ноутбук', 'ru' => 'Ноутбук', 'uz' => 'Noutbuk'],
+            ['tj' => 'Телевизор', 'ru' => 'Телевизор', 'uz' => 'Televizor'],
+            ['tj' => 'Яхдон', 'ru' => 'Холодильник', 'uz' => 'Muzlatgich'],
+            ['tj' => 'Мошинаи ҷомашӯй', 'ru' => 'Стиральная машина', 'uz' => 'Kir yuvish mashinasi'],
+            ['tj' => 'Кондиционер', 'ru' => 'Кондиционер', 'uz' => 'Konditsioner'],
+            ['tj' => 'Гӯшмонак', 'ru' => 'Наушники', 'uz' => 'Quloqchin'],
+            ['tj' => 'Соати ҳушманд', 'ru' => 'Смарт-часы', 'uz' => 'Smart soat'],
+            ['tj' => 'Камера', 'ru' => 'Камера', 'uz' => 'Kamera'],
+            ['tj' => 'Чангкашак', 'ru' => 'Пылесос', 'uz' => 'Changyutgich'],
+        ];
     }
 }

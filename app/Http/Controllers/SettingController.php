@@ -20,7 +20,7 @@ class SettingController extends Controller
      *     summary="Рӯйхати танзимотҳо",
      *     tags={"Settings"},
      *     security={{"bearerAuth":{}}},
-     *     @OA\Response(response=200, description="OK")
+     *     @OA\Response(response=200, description="Муваффақ")
      * )
      */
     public function index()
@@ -104,7 +104,7 @@ class SettingController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Муваффақ",
      *         @OA\JsonContent(
      *             @OA\Property(property="data", type="object")
      *         )
@@ -148,7 +148,7 @@ class SettingController extends Controller
      *         description="Навсозӣ шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="setting updated")
+     *             @OA\Property(property="message", type="string", example="Танзимот бо муваффақият навсозӣ шуд")
      *         )
      *     )
      * )
@@ -185,7 +185,7 @@ class SettingController extends Controller
      *         description="Нест шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="setting deleted")
+     *             @OA\Property(property="message", type="string", example="Танзимот бо муваффақият нест карда шуд")
      *         )
      *     ),
      *

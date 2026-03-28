@@ -15,6 +15,8 @@ class StockResource extends JsonResource
             'stock_id' => $this->id,
             'quantity' => $this->quantity,
             'added_price' => $this->added_price,
+            'added_price_formatted' => number_format($this->added_price, 0, '.', ' ') . ' TJS',
+            'currency' => 'TJS',
         ];
 
         return $this->getAttributes($result);

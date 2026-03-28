@@ -68,6 +68,15 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
+        $exists = Review::query()
+            ->where('user_id', auth()->id())
+            ->where('product_id', $request->product_id)
+            ->exists();
+
+        if ($exists) {
+            return $this->error('you already reviewed this product');
+        }
+
         $review = Review::create([
             'user_id' => auth()->id(),
             'product_id' => $request->product_id,
@@ -75,7 +84,7 @@ class ReviewController extends Controller
             'body' => $request->body,
         ]);
 
-        return $this->success('Шарҳ сохта шуд', $review);
+        return $this->success('Шарҳ сохта шуд', $review->load('product', 'user'));
     }
 
     /**
@@ -143,7 +152,7 @@ class ReviewController extends Controller
     {
         $review->update($request->validated());
 
-        return $this->success('Шарҳ навсозӣ шуд', $review);
+        return $this->success('Шарҳ навсозӣ шуд', $review->fresh()->load('product', 'user'));
     }
 
     /**

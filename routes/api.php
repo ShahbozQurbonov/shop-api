@@ -19,6 +19,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusOrderController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPaymentCardsController;
@@ -55,6 +56,7 @@ Route::apiResources([
     'products.reviews' => ProductReviewContoller::class,
     'delivery-methods' => DeliveryMethodController::class,  //
     'payment-card-types' => PaymentCardTypeController::class,   //
+    'stocks' => StockController::class,
     'categories.products' => CategoryProductController::class,
     'user-payment-cards' => UserPaymentCardsController::class,
     'attributes' => AttributeController::class,

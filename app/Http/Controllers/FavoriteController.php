@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,8 @@ class FavoriteController extends Controller
      *                     ),
      *
      *                     @OA\Property(property="price", type="number", example=5792),
+     *                     @OA\Property(property="currency", type="string", example="TJS"),
+     *                     @OA\Property(property="price_formatted", type="string", example="5 792 TJS"),
      *
      *                     @OA\Property(
      *                         property="description",
@@ -89,7 +92,14 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        return auth()->user()->favorites()->paginate(20);
+        return $this->response(
+            ProductResource::collection(
+                auth()->user()
+                    ->favorites()
+                    ->with(['category', 'stocks', 'photos', 'discount'])
+                    ->paginate(20)
+            )
+        );
     }
 
     /**

@@ -32,9 +32,11 @@ class ProductController extends Controller
      *                 @OA\Items(
      *                     @OA\Property(property="id", type="integer", example=1),
      *                     @OA\Property(property="name", type="object"),
-     *                     @OA\Property(property="price", type="number", example=500000),
+     *                     @OA\Property(property="price", type="number", example=5000),
      *                     @OA\Property(property="description", type="object"),
-     *                     @OA\Property(property="discounted_price", type="number", example=450000)
+     *                     @OA\Property(property="discounted_price", type="number", example=4500),
+     *                     @OA\Property(property="currency", type="string", example="TJS"),
+     *                     @OA\Property(property="price_formatted", type="string", example="5 000 TJS")
      *                 )
      *             )
      *         )
@@ -63,7 +65,7 @@ class ProductController extends Controller
      *                 @OA\Property(property="ru", type="string", example="Стол"),
      *                 @OA\Property(property="uz", type="string", example="Stol"),
      *             ),
-     *             @OA\Property(property="price", type="number", example=500000),
+     *             @OA\Property(property="price", type="number", example=5000),
      *             @OA\Property(property="description", type="object",
      *                 @OA\Property(property="tj", type="string"),
      *                 @OA\Property(property="ru", type="string"),
@@ -105,9 +107,11 @@ class ProductController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="name", type="object"),
-     *             @OA\Property(property="price", type="number", example=500000),
+     *             @OA\Property(property="price", type="number", example=5000),
      *             @OA\Property(property="description", type="object"),
-     *             @OA\Property(property="discounted_price", type="number", example=450000)
+     *             @OA\Property(property="discounted_price", type="number", example=4500),
+     *             @OA\Property(property="currency", type="string", example="TJS"),
+     *             @OA\Property(property="price_formatted", type="string", example="5 000 TJS")
      *         )
      *     )
      * )
@@ -226,7 +230,7 @@ class ProductController extends Controller
      *             @OA\Items(
      *                 @OA\Property(property="id", type="integer"),
      *                 @OA\Property(property="name", type="object"),
-     *                 @OA\Property(property="price", type="number")
+     *                 @OA\Property(property="price", type="number", example=5000)
      *             )
      *         )
      *     )

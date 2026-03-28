@@ -427,7 +427,7 @@
                         "description": "Хатогии валидация"
                     },
                     "401": {
-                        "description": "Email ё password нодуруст аст"
+                        "description": "Почтаи электронӣ ё рамз нодуруст аст"
                     }
                 }
             }
@@ -445,7 +445,7 @@
                         "description": "Шумо бо муваффақият аз система баромадед"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Шумо ба система ворид нашудаед"
                     }
                 },
                 "security": [
@@ -637,7 +637,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Шумо ба система ворид нашудаед"
                     }
                 },
                 "security": [
@@ -1153,6 +1153,14 @@
                                                         "type": "number",
                                                         "example": 5792
                                                     },
+                                                    "currency": {
+                                                        "type": "string",
+                                                        "example": "TJS"
+                                                    },
+                                                    "price_formatted": {
+                                                        "type": "string",
+                                                        "example": "5 792 TJS"
+                                                    },
                                                     "description": {
                                                         "type": "object"
                                                     },
@@ -1377,7 +1385,12 @@
                                                         "type": "integer"
                                                     },
                                                     "sum": {
-                                                        "type": "number"
+                                                        "type": "number",
+                                                        "example": 6380
+                                                    },
+                                                    "sum_formatted": {
+                                                        "type": "string",
+                                                        "example": "6 380 TJS"
                                                     },
                                                     "comment": {
                                                         "type": "string"
@@ -1396,7 +1409,8 @@
                                                                     "type": "object"
                                                                 },
                                                                 "price": {
-                                                                    "type": "number"
+                                                                    "type": "number",
+                                                                    "example": 3890
                                                                 },
                                                                 "quantity": {
                                                                     "type": "integer"
@@ -1528,7 +1542,12 @@
                                             "type": "integer"
                                         },
                                         "sum": {
-                                            "type": "number"
+                                            "type": "number",
+                                            "example": 6380
+                                        },
+                                        "sum_formatted": {
+                                            "type": "string",
+                                            "example": "6 380 TJS"
                                         },
                                         "comment": {
                                             "type": "string"
@@ -1550,7 +1569,8 @@
                                                         "type": "object"
                                                     },
                                                     "price": {
-                                                        "type": "number"
+                                                        "type": "number",
+                                                        "example": 3890
                                                     },
                                                     "quantity": {
                                                         "type": "integer"
@@ -1796,7 +1816,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Муваффақ"
                     }
                 }
             },
@@ -1837,7 +1857,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Updated"
+                        "description": "Навсозӣ шуд"
                     }
                 },
                 "security": [
@@ -1864,7 +1884,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Deleted"
+                        "description": "Нест карда шуд"
                     }
                 },
                 "security": [
@@ -2263,14 +2283,22 @@
                                                     },
                                                     "price": {
                                                         "type": "number",
-                                                        "example": 500000
+                                                        "example": 5000
                                                     },
                                                     "description": {
                                                         "type": "object"
                                                     },
                                                     "discounted_price": {
                                                         "type": "number",
-                                                        "example": 450000
+                                                        "example": 4500
+                                                    },
+                                                    "currency": {
+                                                        "type": "string",
+                                                        "example": "TJS"
+                                                    },
+                                                    "price_formatted": {
+                                                        "type": "string",
+                                                        "example": "5 000 TJS"
                                                     }
                                                 },
                                                 "type": "object"
@@ -2325,7 +2353,7 @@
                                     },
                                     "price": {
                                         "type": "number",
-                                        "example": 500000
+                                        "example": 5000
                                     },
                                     "description": {
                                         "properties": {
@@ -2393,14 +2421,22 @@
                                         },
                                         "price": {
                                             "type": "number",
-                                            "example": 500000
+                                            "example": 5000
                                         },
                                         "description": {
                                             "type": "object"
                                         },
                                         "discounted_price": {
                                             "type": "number",
-                                            "example": 450000
+                                            "example": 4500
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "example": "TJS"
+                                        },
+                                        "price_formatted": {
+                                            "type": "string",
+                                            "example": "5 000 TJS"
                                         }
                                     },
                                     "type": "object"
@@ -2558,7 +2594,8 @@
                                                 "type": "object"
                                             },
                                             "price": {
-                                                "type": "number"
+                                                "type": "number",
+                                                "example": 5000
                                             }
                                         },
                                         "type": "object"
@@ -3226,7 +3263,7 @@
                 "operationId": "04b6f539c3af7d460d214177ac396d5e",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Муваффақ"
                     }
                 },
                 "security": [
@@ -3318,7 +3355,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Муваффақ",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3394,7 +3431,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "setting updated"
+                                            "example": "Танзимот бо муваффақият навсозӣ шуд"
                                         }
                                     },
                                     "type": "object"
@@ -3440,7 +3477,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "setting deleted"
+                                            "example": "Танзимот бо муваффақият нест карда шуд"
                                         }
                                     },
                                     "type": "object"
@@ -3954,7 +3991,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "status changed"
+                                            "example": "Статуси фармоиш бо муваффақият иваз шуд"
                                         }
                                     },
                                     "type": "object"
@@ -4120,7 +4157,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Муваффақ"
                     }
                 },
                 "security": [
@@ -4347,7 +4384,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "card added"
+                                            "example": "Корти пардохт бо муваффақият илова шуд"
                                         }
                                     },
                                     "type": "object"
@@ -4383,7 +4420,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Муваффақ"
                     }
                 },
                 "security": [
@@ -4410,7 +4447,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Deleted"
+                        "description": "Нест карда шуд"
                     }
                 },
                 "security": [
@@ -4534,7 +4571,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "user setting created"
+                                            "example": "Танзимоти корбар бо муваффақият сохта шуд"
                                         },
                                         "data": {
                                             "type": "object"
@@ -4607,7 +4644,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "user setting updated"
+                                            "example": "Танзимоти корбар бо муваффақият навсозӣ шуд"
                                         }
                                     },
                                     "type": "object"
@@ -4652,7 +4689,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "user setting deleted"
+                                            "example": "Танзимоти корбар бо муваффақият нест карда шуд"
                                         }
                                     },
                                     "type": "object"

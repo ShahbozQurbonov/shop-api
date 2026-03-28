@@ -113,7 +113,7 @@ class ProductPhotoContoller extends Controller
      */
     public function destroy(Product $product, Photo $photo)
     {
-        Gate::authorize('product:destroy');
+        Gate::authorize('product:delete');
     
         if ($photo->photoable_id !== $product->id) {
             abort(403);

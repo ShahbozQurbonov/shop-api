@@ -93,7 +93,7 @@ class UserAddressController extends Controller
      *         @OA\Schema(type="integer", example=1)
      *     ),
      *
-     *     @OA\Response(response=200, description="OK")
+     *     @OA\Response(response=200, description="Муваффақ")
      * )
      */
     public function show(UserAddress $userAddress)

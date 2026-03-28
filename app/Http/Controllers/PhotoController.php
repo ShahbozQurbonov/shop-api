@@ -7,6 +7,7 @@ use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdatePhotoRequest;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Storage;
 use OpenApi\Annotations as OA;
 
@@ -75,9 +76,7 @@ class PhotoController extends Controller
         ];
 
         if (!isset($typeMap[$request->photoable_type])) {
-            return response()->json([
-                'message' => 'Invalid photoable_type'
-            ], 422);
+            return $this->error('Invalid photoable_type', null, 422);
         }
 
         $photoableType = $typeMap[$request->photoable_type];
@@ -86,8 +85,10 @@ class PhotoController extends Controller
         $photoable = $photoableType::find($request->photoable_id);
 
         if (!$photoable) {
-            return $this->error('Маълумоти дархостшуда ёфт нашуд', 404);
-    }
+            return $this->error('Маълумоти дархостшуда ёфт нашуд', null, 404);
+        }
+
+        $this->authorizePhotoAttachment($request->user(), $photoable);
 
         // 📸 upload file
         $file = $request->file('photo');
@@ -102,6 +103,23 @@ class PhotoController extends Controller
         ]);
 
         return $this->success('Акс бо муваффақият илова шуд', $photo);
+    }
+
+    private function authorizePhotoAttachment(User $user, Product|User $photoable): void
+    {
+        if ($photoable instanceof User) {
+            if ($user->id === $photoable->id || $user->can('user:update')) {
+                return;
+            }
+
+            throw new AuthorizationException('Unauthorized');
+        }
+
+        if ($user->can('product:update') || $user->can('product:create')) {
+            return;
+        }
+
+        throw new AuthorizationException('Unauthorized');
     }
 
     /**

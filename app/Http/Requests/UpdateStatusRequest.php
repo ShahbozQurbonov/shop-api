@@ -27,7 +27,7 @@ class UpdateStatusRequest extends FormRequest
             'name.ru' => 'nullable|string',
             'name.uz' => 'nullable|string',
             'for' => 'nullable|string',
-            'code' => 'nullable|string|unique:statuses,code,' . $this->route('id')
+            'code' => 'nullable|string|unique:statuses,code,' . $this->route('status')?->id
         ];
     }
 }

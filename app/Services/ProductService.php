@@ -42,7 +42,7 @@ class ProductService extends Service
             $stock = $product->stocks()->find($requestProduct['stock_id']);
 
             if (!$stock) {
-                $requestProduct['error'] = 'stock not found';
+                $requestProduct['error'] = 'Сток ёфт нашуд';
                 $notFoundProducts[] = $requestProduct;
                 continue;
             }

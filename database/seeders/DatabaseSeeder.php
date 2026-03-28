@@ -21,6 +21,13 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             SettingSeeder::class,
             PaymentCardTypeSeeder::class,
+            DiscountSeeder::class,
+            UserSettingSeeder::class,
+            UserPaymentCardsSeeder::class,
+            PhotoSeeder::class,
+            ReviewSeeder::class,
+            FavoriteSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }

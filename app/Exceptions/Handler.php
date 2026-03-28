@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -53,15 +54,27 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return response()->json([
-            'message' => 'Шумо ворид нашудаед (Unauthorized)'
+            'success' => false,
+            'status' => 'error',
+            'message' => 'Шумо ба система ворид нашудаед',
         ], 401);
     }
 
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Маълумоти воридшуда нодуруст аст',
+                'errors' => $exception->errors(),
+            ], $exception->status);
+        }
+
         if ($exception instanceof AuthorizationException) {
             return response()->json([
                 'success' => false,
+                'status' => 'error',
                 'message' => 'Шумо иҷозат надоред барои иҷрои ин амал',
             ], 403);
         }
@@ -69,6 +82,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
             return response()->json([
                 'success' => false,
+                'status' => 'error',
                 'message' => 'Шумо иҷозат надоред барои иҷрои ин амал'
             ], 403);
         }
@@ -78,8 +92,35 @@ class Handler extends ExceptionHandler
 
             return response()->json([
                 'success' => false,
+                'status' => 'error',
                 'message' => $model . ' ёфт нашуд'
             ], 404);
+        }
+
+        if ($exception instanceof HttpExceptionInterface) {
+            $messages = [
+                403 => 'Шумо иҷозат надоред барои иҷрои ин амал',
+                404 => 'Саҳифа ё маълумоти дархостшуда ёфт нашуд',
+                405 => 'Ин усули дархост иҷозат дода нашудааст',
+                419 => 'Мӯҳлати дархост ба анҷом расид, дубора кӯшиш кунед',
+                429 => 'Шумораи дархостҳо аз ҳад зиёд аст, баъдтар дубора кӯшиш кунед',
+            ];
+
+            $status = $exception->getStatusCode();
+
+            return response()->json([
+                'success' => false,
+                'status' => 'error',
+                'message' => $messages[$status] ?? 'Хатогии дархост ба вуҷуд омад',
+            ], $status);
+        }
+
+        if (!$this->isHttpException($exception) && !$this->shouldntReport($exception)) {
+            return response()->json([
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Хатогии дохилии сервер ба вуҷуд омад',
+            ], 500);
         }
     
         return parent::render($request, $exception);

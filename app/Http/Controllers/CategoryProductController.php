@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,12 @@ class CategoryProductController extends Controller
      */
     public function index(Category $category)
     {
-        return $category->products()->cursorPaginate(25);
+        return $this->response(
+            ProductResource::collection(
+                $category->products()
+                    ->with(['category', 'stocks', 'photos', 'discount'])
+                    ->cursorPaginate(25)
+            )
+        );
     }
 }

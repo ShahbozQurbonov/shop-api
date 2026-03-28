@@ -13,7 +13,7 @@ class PhotoPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; 
+        return false;
     }
 
     /**
@@ -21,7 +21,7 @@ class PhotoPolicy
      */
     public function view(User $user, Photo $photo): bool
     {
-        return true;
+        return $this->isOwner($user, $photo);
     }
 
     /**

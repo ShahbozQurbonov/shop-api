@@ -52,7 +52,8 @@ class OrderController extends Controller
      *             @OA\Property(property="data", type="array",
      *                 @OA\Items(
      *                     @OA\Property(property="id", type="integer"),
-     *                     @OA\Property(property="sum", type="number"),
+     *                     @OA\Property(property="sum", type="number", example=6380),
+     *                     @OA\Property(property="sum_formatted", type="string", example="6 380 TJS"),
      *                     @OA\Property(property="comment", type="string"),
      * 
      *                     @OA\Property(property="status", type="object"),
@@ -63,7 +64,7 @@ class OrderController extends Controller
      *                         @OA\Items(
      *                             @OA\Property(property="id", type="integer"),
      *                             @OA\Property(property="name", type="object"),
-     *                             @OA\Property(property="price", type="number"),
+     *                             @OA\Property(property="price", type="number", example=3890),
      *                             @OA\Property(property="quantity", type="integer")
      *                         )
      *                     ),
@@ -77,11 +78,13 @@ class OrderController extends Controller
      */
     public function index(): JsonResponse
     {
+        $query = auth()->user()->orders()->with(['user', 'status', 'paymentType', 'deliveryMethod']);
+
         if (request()->has('status_id')) {
-            return $this->response(OrderResource::collection(auth()->user()->orders()->where('status_id', request('status_id'))->paginate(10)));
+            $query->where('status_id', request('status_id'));
         }
 
-        return $this->response(OrderResource::collection(auth()->user()->orders()->paginate(10)));
+        return $this->response(OrderResource::collection($query->latest()->paginate(10)));
     }
 
     /**
@@ -161,7 +164,8 @@ class OrderController extends Controller
      *         description="Маълумоти фармоиш",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer"),
-     *             @OA\Property(property="sum", type="number"),
+     *             @OA\Property(property="sum", type="number", example=6380),
+     *             @OA\Property(property="sum_formatted", type="string", example="6 380 TJS"),
      *             @OA\Property(property="comment", type="string"),
      * 
      *             @OA\Property(property="user", type="object"),
@@ -173,7 +177,7 @@ class OrderController extends Controller
      *                 @OA\Items(
      *                     @OA\Property(property="id", type="integer"),
      *                     @OA\Property(property="name", type="object"),
-     *                     @OA\Property(property="price", type="number"),
+     *                     @OA\Property(property="price", type="number", example=3890),
      *                     @OA\Property(property="quantity", type="integer")
      *                 )
      *             ),
@@ -187,7 +191,7 @@ class OrderController extends Controller
      */
     public function show(Order $order): JsonResponse
     {
-        return $this->response(new OrderResource($order));
+        return $this->response(new OrderResource($order->load(['user', 'status', 'paymentType', 'deliveryMethod'])));
     }
 
     /**
@@ -293,7 +297,10 @@ class OrderController extends Controller
             ]);
         }
     
-        return $this->success('order updated', new OrderResource($order->fresh()));
+        return $this->success(
+            'order updated',
+            new OrderResource($order->fresh()->load(['user', 'status', 'paymentType', 'deliveryMethod']))
+        );
     }
 
     /**

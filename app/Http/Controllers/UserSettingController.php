@@ -81,7 +81,7 @@ class UserSettingController extends Controller
      *         description="Сохта шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="user setting created"),
+     *             @OA\Property(property="message", type="string", example="Танзимоти корбар бо муваффақият сохта шуд"),
      *             @OA\Property(property="data", type="object")
      *         )
      *     ),
@@ -134,7 +134,7 @@ class UserSettingController extends Controller
      *         description="Навсозӣ шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="user setting updated")
+     *             @OA\Property(property="message", type="string", example="Танзимоти корбар бо муваффақият навсозӣ шуд")
      *         )
      *     )
      * )
@@ -168,7 +168,7 @@ class UserSettingController extends Controller
      *         description="Нест шуд",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="user setting deleted")
+     *             @OA\Property(property="message", type="string", example="Танзимоти корбар бо муваффақият нест карда шуд")
      *         )
      *     )
      * )

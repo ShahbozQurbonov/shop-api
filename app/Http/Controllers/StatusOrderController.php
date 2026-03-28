@@ -37,7 +37,7 @@ class StatusOrderController extends Controller
     *         description="Статус иваз шуд",
     *         @OA\JsonContent(
     *             @OA\Property(property="success", type="boolean", example=true),
-    *             @OA\Property(property="message", type="string", example="status changed")
+    *             @OA\Property(property="message", type="string", example="Статуси фармоиш бо муваффақият иваз шуд")
     *         )
     *     ),
     *
@@ -62,6 +62,6 @@ class StatusOrderController extends Controller
 
         $order->update(['status_id' => $status->id]);
 
-        return response(['success' => true, 'message' => 'status changed']);
+        return response(['success' => true, 'message' => 'Статуси фармоиш бо муваффақият иваз шуд']);
     }
 }

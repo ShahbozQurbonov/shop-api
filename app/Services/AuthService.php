@@ -15,7 +15,7 @@ class AuthService extends Service
     {
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'message' => 'Шумо ворид нашудаед (Unauthorized)',
+                'message' => 'Почтаи электронӣ ё рамз нодуруст аст',
             ]);
         }
     }
