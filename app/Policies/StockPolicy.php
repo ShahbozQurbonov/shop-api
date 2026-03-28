@@ -13,7 +13,7 @@ class StockPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->can('stock:viewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class StockPolicy
      */
     public function view(User $user, Stock $stock): bool
     {
-        //
+        return $user->can('stock:view');
     }
 
     /**
@@ -29,7 +29,7 @@ class StockPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->can('stock:create');
     }
 
     /**
@@ -37,7 +37,7 @@ class StockPolicy
      */
     public function update(User $user, Stock $stock): bool
     {
-        //
+        return $user->can('stock:update');
     }
 
     /**
@@ -45,7 +45,7 @@ class StockPolicy
      */
     public function delete(User $user, Stock $stock): bool
     {
-        //
+        return $user->can('stock:delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class StockPolicy
      */
     public function restore(User $user, Stock $stock): bool
     {
-        //
+        return $user->can('stock:restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class StockPolicy
      */
     public function forceDelete(User $user, Stock $stock): bool
     {
-        //
+        return false;
     }
 }

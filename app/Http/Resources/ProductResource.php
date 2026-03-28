@@ -10,6 +10,8 @@ class ProductResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $currency = 'TJS';
+
         if ($this->getDiscount()) {
             if ($this->discount->sum) {
                 $discountedPrice = $this->price - $this->discount->sum;
@@ -22,6 +24,8 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
             'price' => $this->price,
+            'price_formatted' => $this->formatMoney($this->price, $currency),
+            'currency' => $currency,
             'description' => $this->getTranslations('description'),
             'category' => new CategoryResource($this->category),
             'inventory' => StockResource::collection($this->stocks),
@@ -31,6 +35,12 @@ class ProductResource extends JsonResource
             'photos' => PhotoResource::collection($this->photos),
             'discount' => $this->getDiscount(),
             'discounted_price' => $discountedPrice ?? null,
+            'discounted_price_formatted' => isset($discountedPrice) ? $this->formatMoney($discountedPrice, $currency) : null,
         ];
+    }
+
+    private function formatMoney(int|float $amount, string $currency): string
+    {
+        return number_format($amount, 0, '.', ' ') . ' ' . $currency;
     }
 }

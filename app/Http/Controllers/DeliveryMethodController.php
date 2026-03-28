@@ -5,60 +5,45 @@ namespace App\Http\Controllers;
 use App\Models\DeliveryMethod;
 use App\Http\Requests\StoreDeliveryMethodRequest;
 use App\Http\Requests\UpdateDeliveryMethodRequest;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 class DeliveryMethodController extends Controller
 {
-    public function index(): Collection
+    public function __construct()
     {
-        return DeliveryMethod::all();
+        $this->middleware('auth:api')->except(['index', 'show']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(): JsonResponse
     {
-        //
+        return $this->response(DeliveryMethod::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDeliveryMethodRequest $request)
     {
-        //
+        $deliveryMethod = DeliveryMethod::create($request->validated());
+
+        return $this->success('Усули интиқол бо муваффақият сохта шуд', $deliveryMethod);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(DeliveryMethod $deliveryMethod)
     {
-        //
+        return $this->response($deliveryMethod);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DeliveryMethod $deliveryMethod)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDeliveryMethodRequest $request, DeliveryMethod $deliveryMethod)
     {
-        //
+        $deliveryMethod->update($request->validated());
+
+        return $this->success('Усули интиқол бо муваффақият навсозӣ шуд', $deliveryMethod);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DeliveryMethod $deliveryMethod)
     {
-        //
+        abort_unless(auth()->user()->can('delivery-method:delete'), 403);
+
+        $deliveryMethod->delete();
+
+        return $this->success('Усули интиқол бо муваффақият нест карда шуд');
     }
 }

@@ -11,7 +11,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->can('category:update');
     }
 
     /**
@@ -22,7 +22,13 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'parent_id' => 'nullable|exists:categories,id',
+            'name' => 'nullable|array',
+            'name.uz' => 'nullable|string',
+            'name.ru' => 'nullable|string',
+            'name.tj' => 'nullable|string',
+            'icon' => 'nullable|string',
+            'order' => 'nullable|integer',
         ];
     }
 }

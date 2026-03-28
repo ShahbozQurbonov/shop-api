@@ -15,7 +15,7 @@ class AuthService extends Service
     {
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'message' => 'Почтаи электронӣ ё рамз нодуруст аст',
             ]);
         }
     }

@@ -5,13 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use OpenApi\Annotations as OA;
 
-/**
- * @OA\Schema(
- *     schema="StoreAttributeRequest",
- *     type="object",
- *     @OA\Property(property="name", type="string", description="Номи атрибут")
- * )
- */
 class StoreAttributeRequest extends FormRequest
 {
     /**
@@ -19,7 +12,7 @@ class StoreAttributeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('attribute:create');
     }
 
     /**
@@ -30,7 +23,7 @@ class StoreAttributeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
         ];
     }
 }

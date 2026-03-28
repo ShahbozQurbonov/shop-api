@@ -11,7 +11,7 @@ class UpdateDeliveryMethodRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->can('delivery-method:update');
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateDeliveryMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|array',
+            'name.tj' => 'nullable|string|max:255',
+            'name.ru' => 'nullable|string|max:255',
+            'name.uz' => 'nullable|string|max:255',
+            'estimated_time' => 'nullable|array',
+            'estimated_time.tj' => 'nullable|string|max:255',
+            'estimated_time.ru' => 'nullable|string|max:255',
+            'estimated_time.uz' => 'nullable|string|max:255',
+            'sum' => 'nullable|integer|min:0',
         ];
     }
 }

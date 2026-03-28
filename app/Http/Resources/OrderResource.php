@@ -13,6 +13,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'comment' => $this->comment,
             'sum' => $this->sum,
+            'sum_formatted' => number_format($this->sum, 0, '.', ' ') . ' TJS',
+            'currency' => 'TJS',
             'user' => $this->user,
             'status' => $this->status,
             'products' => $this->products,

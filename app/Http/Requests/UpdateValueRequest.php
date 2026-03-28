@@ -11,7 +11,7 @@ class UpdateValueRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('value:update');
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateValueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|array',
+            'name.*' => 'string',
+
+            'added_price' => 'nullable|numeric',
         ];
     }
 }

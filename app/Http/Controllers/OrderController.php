@@ -26,39 +26,105 @@ class OrderController extends Controller
         protected ProductService $productService,
     )
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware('auth:api');
         $this->authorizeResource(Order::class, 'order');
     }
-
 
     /**
      * @OA\Get(
      *     path="/api/orders",
-     *     summary="Рӯйхати фармоишҳоро гирифтан",
+     *     summary="Рӯйхати фармоишҳои корбар",
      *     tags={"Orders"},
-     *     @OA\Response(response=200, description="Муаффак")
+     *     security={{"bearerAuth":{}}},
+     * 
+     *     @OA\Parameter(
+     *         name="status_id",
+     *         in="query",
+     *         required=false,
+     *         description="Филтр аз рӯи ҳолат",
+     *         @OA\Schema(type="integer")
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Рӯйхати фармоишҳо",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="id", type="integer"),
+     *                     @OA\Property(property="sum", type="number", example=6380),
+     *                     @OA\Property(property="sum_formatted", type="string", example="6 380 TJS"),
+     *                     @OA\Property(property="comment", type="string"),
+     * 
+     *                     @OA\Property(property="status", type="object"),
+     * 
+     *                     @OA\Property(
+     *                         property="products",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             @OA\Property(property="id", type="integer"),
+     *                             @OA\Property(property="name", type="object"),
+     *                             @OA\Property(property="price", type="number", example=3890),
+     *                             @OA\Property(property="quantity", type="integer")
+     *                         )
+     *                     ),
+     * 
+     *                     @OA\Property(property="address", type="object")
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function index(): JsonResponse
     {
+        $query = auth()->user()->orders()->with(['user', 'status', 'paymentType', 'deliveryMethod']);
+
         if (request()->has('status_id')) {
-            return $this->response(OrderResource::collection(auth()->user()->orders()->where('status_id', request('status_id'))->paginate(10)));
+            $query->where('status_id', request('status_id'));
         }
 
-        return $this->response(OrderResource::collection(auth()->user()->orders()->paginate(10)));
+        return $this->response(OrderResource::collection($query->latest()->paginate(10)));
     }
-
 
     /**
      * @OA\Post(
      *     path="/api/orders",
-     *     summary="Фармоиш эҷод кардан",
+     *     summary="Эҷоди фармоиш",
      *     tags={"Orders"},
+     *     security={{"bearerAuth":{}}},
+     * 
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(type="object")
+     *         @OA\JsonContent(
+     *             required={"delivery_method_id","payment_type_id","products"},
+     *             
+     *             @OA\Property(property="delivery_method_id", type="integer", example=1),
+     *             @OA\Property(property="payment_type_id", type="integer", example=1),
+     *             @OA\Property(property="address_id", type="integer", example=1),
+     * 
+     *             @OA\Property(
+     *                 property="products",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="product_id", type="integer", example=1),
+     *                     @OA\Property(property="quantity", type="integer", example=2),
+     *                     @OA\Property(property="stock_id", type="integer", example=1)
+     *                 )
+     *             ),
+     * 
+     *             @OA\Property(property="comment", type="string", example="Илтимос зуд расонед")
+     *         )
      *     ),
-     *     @OA\Response(response=201, description="Эҷод шуд")
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Фармоиш сохта шуд"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Баъзе маҳсулот дастрас нестанд"
+     *     )
      * )
      */
     public function store(StoreOrderRequest $request): JsonResponse
@@ -78,24 +144,54 @@ class OrderController extends Controller
         return $this->error('some products not found or does not have in inventory', ['not_found_products' => $notFoundProducts]);
     }
 
-
     /**
      * @OA\Get(
-     *     path="/api/orders/{order}",
-     *     summary="Фармоишро нишон додан",
+     *     path="/api/orders/{id}",
+     *     summary="Намоиши як фармоиш",
      *     tags={"Orders"},
+     *     security={{"bearerAuth":{}}},
+     * 
      *     @OA\Parameter(
-     *         name="order",
+     *         name="id",
      *         in="path",
      *         required=true,
+     *         description="ID-и фармоиш",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response=200, description="Муаффак")
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Маълумоти фармоиш",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="sum", type="number", example=6380),
+     *             @OA\Property(property="sum_formatted", type="string", example="6 380 TJS"),
+     *             @OA\Property(property="comment", type="string"),
+     * 
+     *             @OA\Property(property="user", type="object"),
+     *             @OA\Property(property="status", type="object"),
+     * 
+     *             @OA\Property(
+     *                 property="products",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="id", type="integer"),
+     *                     @OA\Property(property="name", type="object"),
+     *                     @OA\Property(property="price", type="number", example=3890),
+     *                     @OA\Property(property="quantity", type="integer")
+     *                 )
+     *             ),
+     * 
+     *             @OA\Property(property="address", type="object"),
+     *             @OA\Property(property="payment_type", type="object"),
+     *             @OA\Property(property="delivery_method", type="object")
+     *         )
+     *     )
      * )
      */
     public function show(Order $order): JsonResponse
     {
-        return $this->response(new OrderResource($order));
+        return $this->response(new OrderResource($order->load(['user', 'status', 'paymentType', 'deliveryMethod'])));
     }
 
     /**
@@ -108,51 +204,131 @@ class OrderController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/orders/{order}",
-     *     summary="Фармоишро навсозӣ кардан",
+     *     path="/api/orders/{id}",
+     *     summary="Навсозии фармоиш",
      *     tags={"Orders"},
+     *     security={{"bearerAuth":{}}},
+     * 
      *     @OA\Parameter(
-     *         name="order",
+     *         name="id",
      *         in="path",
      *         required=true,
+     *         description="ID-и фармоиш",
      *         @OA\Schema(type="integer")
      *     ),
+     * 
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(type="object")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="delivery_method_id", type="integer", example=1),
+     *             @OA\Property(property="payment_type_id", type="integer", example=1),
+     *             @OA\Property(property="address_id", type="integer", example=1),
+     *             @OA\Property(property="status_id", type="integer", example=2),
+     *             @OA\Property(property="comment", type="string", example="Тағйир дода шуд"),
+     * 
+     *             @OA\Property(
+     *                 property="products",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="product_id", type="integer", example=1),
+     *                     @OA\Property(property="quantity", type="integer", example=2),
+     *                     @OA\Property(property="stock_id", type="integer", example=1)
+     *                 )
+     *             )
+     *         )
      *     ),
-     *     @OA\Response(response=200, description="Навсозӣ шуд")
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Фармоиш бомуваффақият навсозӣ шуд"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Баъзе маҳсулот дастрас нестанд"
+     *     )
      * )
      */
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order): JsonResponse
     {
-        //
+        $data = $request->validated();
+    
+        // 🔄 oddiy fieldlar
+        $order->update([
+            'delivery_method_id' => $data['delivery_method_id'] ?? $order->delivery_method_id,
+            'payment_type_id'    => $data['payment_type_id'] ?? $order->payment_type_id,
+            'status_id'          => $data['status_id'] ?? $order->status_id,
+            'comment'            => $data['comment'] ?? $order->comment,
+        ]);
+    
+        // 📦 products JSON bilan ishlash
+        if (!empty($data['products'])) {
+    
+            $sum = 0;
+            $products = [];
+            $notFoundProducts = [];
+    
+            list($sum, $products, $notFoundProducts) =
+                $this->productService->checkForStock(
+                    $data['products'],
+                    $sum,
+                    $products,
+                    $notFoundProducts
+                );
+    
+            if (!empty($notFoundProducts)) {
+                return $this->error('some products not found', [
+                    'not_found_products' => $notFoundProducts
+                ]);
+            }
+    
+            // ✅ JSON sifatida saqlaymiz
+            $order->update([
+                'products' => $products,
+                'sum' => $sum
+            ]);
+        }
+    
+        // 📍 address ham JSON
+        if (!empty($data['address_id'])) {
+            $address = UserAddress::find($data['address_id']);
+    
+            $order->update([
+                'address' => $address
+            ]);
+        }
+    
+        return $this->success(
+            'order updated',
+            new OrderResource($order->fresh()->load(['user', 'status', 'paymentType', 'deliveryMethod']))
+        );
     }
 
     /**
      * @OA\Delete(
-     *     path="/api/orders/{order}",
-     *     summary="Фармоишро нест кардан",
+     *     path="/api/orders/{id}",
+     *     summary="Нест кардани фармоиш",
      *     tags={"Orders"},
+     *     security={{"bearerAuth":{}}},
+     * 
      *     @OA\Parameter(
-     *         name="order",
+     *         name="id",
      *         in="path",
      *         required=true,
+     *         description="ID-и фармоиш",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response=204, description="Нест шуд")
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Фармоиш нест карда шуд"
+     *     )
      * )
      */
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
+    public function destroy(Order $order): JsonResponse
     {
         $order->delete();
-        return 1;
+
+        return $this->success('order deleted');
     }
 
 

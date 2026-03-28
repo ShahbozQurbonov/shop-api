@@ -11,7 +11,7 @@ class StoreDeliveryMethodRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->can('delivery-method:create');
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreDeliveryMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|array',
+            'name.tj' => 'required|string|max:255',
+            'name.ru' => 'required|string|max:255',
+            'name.uz' => 'required|string|max:255',
+            'estimated_time' => 'required|array',
+            'estimated_time.tj' => 'required|string|max:255',
+            'estimated_time.ru' => 'required|string|max:255',
+            'estimated_time.uz' => 'required|string|max:255',
+            'sum' => 'required|integer|min:0',
         ];
     }
 }

@@ -11,7 +11,7 @@ class UpdateStatusRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|array',
+            'name.tj' => 'nullable|string',
+            'name.ru' => 'nullable|string',
+            'name.uz' => 'nullable|string',
+            'for' => 'nullable|string',
+            'code' => 'nullable|string|unique:statuses,code,' . $this->route('status')?->id
         ];
     }
 }

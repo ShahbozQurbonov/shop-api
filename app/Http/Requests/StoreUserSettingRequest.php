@@ -20,9 +20,9 @@ class StoreUserSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'setting_id' => 'required',
-            'value_id' => 'nullable',
-            'switch' => 'nullable',
+            'setting_id' => 'required|exists:settings,id',
+            'value_id' => 'nullable|exists:values,id',
+            'switch' => 'nullable|boolean',
         ];
     }
 }
