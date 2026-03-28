@@ -13,7 +13,7 @@ class AttributePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->can('attribute:view');
     }
 
     /**
@@ -21,7 +21,7 @@ class AttributePolicy
      */
     public function view(User $user, Attribute $attribute): bool
     {
-        //
+        return $user->can('attribute:view');
     }
 
     /**
@@ -29,7 +29,7 @@ class AttributePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->can('attribute:create');
     }
 
     /**
@@ -37,7 +37,7 @@ class AttributePolicy
      */
     public function update(User $user, Attribute $attribute): bool
     {
-        //
+        return $user->can('attribute:update');
     }
 
     /**
@@ -45,7 +45,7 @@ class AttributePolicy
      */
     public function delete(User $user, Attribute $attribute): bool
     {
-        //
+        return $user->can('attribute:delete');
     }
 
     /**

@@ -11,7 +11,8 @@ class UpdateReviewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->can('review:update');
+        // return true;
     }
 
     /**
@@ -22,7 +23,8 @@ class UpdateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'rating' => 'nullable|integer|min:1|max:5',
+            'body' => 'nullable|string|max:500'
         ];
     }
 }

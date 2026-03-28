@@ -20,8 +20,8 @@ class UpdateUserSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'switch' => 'nullable',
-            'value_id' => 'nullable',
+            'switch' => 'nullable|boolean',
+            'value_id' => 'nullable|exists:values,id',
         ];
     }
 }

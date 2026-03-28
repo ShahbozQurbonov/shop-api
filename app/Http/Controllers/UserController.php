@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
     /**
      * @OA\Get(
      *     path="/api/users",
      *     summary="Рӯйхати корбаронро гирифтан",
-     *     @OA\Response(response=200, description="Муаффак")
+     *     tags={"Users"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200, description="Муваффак")
      * )
      */
     public function index()
     {
-        return $this->response(User::all());
+        return $this->response(UserResource::collection(User::all()));
     }
 }

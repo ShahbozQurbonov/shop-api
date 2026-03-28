@@ -13,7 +13,13 @@ use OpenApi\Annotations as OA;
  *     title="API барои системаи тиҷоратии электронӣ",
  *     version="1.0.0",
  *     description="Санади API барои ҳама контроллерҳо"
- * )
+ * ),
+ *   @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *     type="http",
+ *    scheme="bearer",
+ *    bearerFormat="JWT"
+ * ),
  * @OA\Tag(name="Users", description="Корбарон")
  * @OA\Tag(name="Auth", description="Аутентификация ва иҷозат")
  * @OA\Tag(name="Roles", description="Ролҳо")
@@ -40,6 +46,8 @@ use OpenApi\Annotations as OA;
  * @OA\Tag(name="Values", description="Арзишҳо")
  * @OA\Tag(name="Stocks", description="Стокҳо")
  */
+
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
@@ -56,7 +64,7 @@ class Controller extends BaseController
         return response()->json([
             'success' => true,
             'status' => 'success',
-            'message' => $message ?? 'operation successfull',
+            'message' => $message ?? 'Амалиёт бомуваффақият анҷом ёфт',
             'data' => $data,
         ]);
     }
@@ -66,7 +74,7 @@ class Controller extends BaseController
         return response()->json([
             'success' => false,
             'status' => 'error',
-            'message' => $message ?? 'error occured',
+            'message' => $message ?? 'Хатогӣ рух дод',
             'data' => $data,
         ], 400);
     }

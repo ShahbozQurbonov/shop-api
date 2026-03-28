@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\PaymentType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PaymentTypeSeeder extends Seeder
@@ -12,32 +11,41 @@ class PaymentTypeSeeder extends Seeder
     {
         PaymentType::create([
             'name' => [
-                'uz' => 'Naxt',
-                'ru' => 'Наличные'
+                'tj' => 'Нақдӣ',
+                'ru' => 'Наличные',
+                'uz' => 'Naqd',
             ]
         ]);
+
         PaymentType::create([
             'name' => [
+                'tj' => 'Терминал',
+                'ru' => 'Терминал',
                 'uz' => 'Terminal',
-                'ru' => 'Terminal'
             ]
         ]);
+
         PaymentType::create([
             'name' => [
-                'uz' => 'Click',
-                'ru' => 'Click'
+                'tj' => 'Корти Миллӣ',
+                'ru' => 'Корти Милли',
+                'uz' => 'Korti Milli',
             ]
         ]);
+
         PaymentType::create([
             'name' => [
-                'uz' => 'Payme',
-                'ru' => 'Payme'
+                'tj' => 'Visa',
+                'ru' => 'Visa',
+                'uz' => 'Visa',
             ]
         ]);
+
         PaymentType::create([
             'name' => [
-                'uz' => 'Uzum',
-                'ru' => 'Uzum'
+                'tj' => 'Mastercard',
+                'ru' => 'Mastercard',
+                'uz' => 'Mastercard',
             ]
         ]);
     }

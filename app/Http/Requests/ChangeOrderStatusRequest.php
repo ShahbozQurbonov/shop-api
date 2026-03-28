@@ -20,7 +20,7 @@ class ChangeOrderStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => 'required',
+            'order_id' => 'required|exists:orders,id'
         ];
     }
 }

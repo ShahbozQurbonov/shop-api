@@ -11,7 +11,8 @@ class StoreReviewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return request()->user()->can('review:create');
+        // return true;
     }
 
     /**
@@ -20,8 +21,8 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rating' => 'required',
-            'body' => 'nullable|max:500'
+            'rating' => 'required|integer|min:1|max:5',
+            'body' => 'nullable|string|max:500'
         ];
     }
 }

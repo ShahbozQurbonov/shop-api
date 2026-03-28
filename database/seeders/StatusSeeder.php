@@ -3,20 +3,17 @@
 namespace Database\Seeders;
 
 use App\Models\Status;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Status::create([
             'name' => [
+                'tj' => 'Нав',
+                'ru' => 'Новый',
                 'uz' => 'Yangi',
-                'ru' => 'Yangi'
             ],
             'code' => 'new',
             'for' => 'order'
@@ -24,8 +21,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
+                'tj' => 'Тасдиқ шуд',
+                'ru' => 'Подтверждено',
                 'uz' => 'Tasdiqlandi',
-                'ru' => 'Tasdiqlandi'
             ],
             'code' => 'confirmed',
             'for' => 'order'
@@ -33,8 +31,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'Ishlanyapti',
-                'ru' => 'Ishlanyapti'
+                'tj' => 'Дар раванд',
+                'ru' => 'В процессе',
+                'uz' => 'Jarayonda',
             ],
             'code' => 'processing',
             'for' => 'order'
@@ -42,8 +41,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'Yetkazib berilyapti',
-                'ru' => 'Yetkazib berilyapti'
+                'tj' => 'Дар роҳ аст',
+                'ru' => 'Доставляется',
+                'uz' => 'Yetkazilmoqda',
             ],
             'code' => 'shipping',
             'for' => 'order'
@@ -51,8 +51,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'Yetkazib berildi',
-                'ru' => 'Yetkazib berildi'
+                'tj' => 'Расонида шуд',
+                'ru' => 'Доставлено',
+                'uz' => 'Yetkazildi',
             ],
             'code' => 'delivered',
             'for' => 'order'
@@ -60,8 +61,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'Tugatildi',
-                'ru' => 'Tugatildi'
+                'tj' => 'Анҷом ёфт',
+                'ru' => 'Завершено',
+                'uz' => 'Yakunlandi',
             ],
             'code' => 'completed',
             'for' => 'order'
@@ -69,8 +71,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
+                'tj' => 'Баста шуд',
+                'ru' => 'Закрыто',
                 'uz' => 'Yopildi',
-                'ru' => 'Yopildi'
             ],
             'code' => 'closed',
             'for' => 'order'
@@ -78,8 +81,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
+                'tj' => 'Бекор карда шуд',
+                'ru' => 'Отменено',
                 'uz' => 'Bekor qilindi',
-                'ru' => 'Bekor qilindi'
             ],
             'code' => 'canceled',
             'for' => 'order'
@@ -87,8 +91,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'Qaytarib berildi',
-                'ru' => 'Qaytarib berildi'
+                'tj' => 'Баргардонида шуд',
+                'ru' => 'Возвращено',
+                'uz' => 'Qaytarildi',
             ],
             'code' => 'refunded',
             'for' => 'order'
@@ -96,8 +101,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'To\'lov kutilmoqda',
-                'ru' => 'To\'lov kutilmoqda'
+                'tj' => 'Интизори пардохт',
+                'ru' => 'Ожидается оплата',
+                'uz' => 'To‘lov kutilmoqda',
             ],
             'code' => 'waiting_payment',
             'for' => 'order'
@@ -105,8 +111,9 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'To\'landi',
-                'ru' => 'To\'landi'
+                'tj' => 'Пардохт шуд',
+                'ru' => 'Оплачено',
+                'uz' => 'To‘landi',
             ],
             'code' => 'paid',
             'for' => 'order'
@@ -114,16 +121,12 @@ class StatusSeeder extends Seeder
 
         Status::create([
             'name' => [
-                'uz' => 'To\'lovda Xato',
-                'ru' => 'To\'lovda Xato'
+                'tj' => 'Хатогӣ дар пардохт',
+                'ru' => 'Ошибка оплаты',
+                'uz' => 'To‘lovda xatolik',
             ],
             'code' => 'payment_error',
             'for' => 'order'
         ]);
-
-
-
-
-
     }
 }
