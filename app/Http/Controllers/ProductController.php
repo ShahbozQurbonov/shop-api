@@ -8,16 +8,10 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use function PHPUnit\Framework\returnArgument;
 use OpenApi\Annotations as OA;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api')->except(['index','show']);
-    }
-
     /**
      * @OA\Get(
      *     path="/api/products",
@@ -118,9 +112,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        if(!$product) {
-            return $this->error('Product not found');
-        }
         return new ProductResource($product);
     }
 
@@ -166,11 +157,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        
-        if (!$product) {
-            return $this->error('Product not found');
-        }
-         $product->update($request->validated());
+        $product->update($request->validated());
 
         return $this->success('product updated');
     }
@@ -211,7 +198,6 @@ class ProductController extends Controller
      * @OA\Get(
      *     path="/api/products/{id}/related",
      *     summary="Маҳсулотҳои монанд",
-     *     security={{"bearerAuth":{}}},
      *     tags={"Products"},
      * 
      *     @OA\Parameter(

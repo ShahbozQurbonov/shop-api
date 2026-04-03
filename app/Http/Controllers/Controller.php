@@ -13,22 +13,21 @@ use OpenApi\Annotations as OA;
  *     title="API барои системаи тиҷоратии электронӣ",
  *     version="1.0.0",
  *     description="Санади API барои ҳама контроллерҳо"
- * ),
- *   @OA\SecurityScheme(
- *      securityScheme="bearerAuth",
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
  *     type="http",
- *    scheme="bearer",
- *    bearerFormat="JWT"
- * ),
+ *     scheme="bearer"
+ * )
  * @OA\Tag(name="Users", description="Корбарон")
  * @OA\Tag(name="Auth", description="Аутентификация ва иҷозат")
  * @OA\Tag(name="Roles", description="Ролҳо")
  * @OA\Tag(name="Permissions", description="Иҷозатҳо")
  * @OA\Tag(name="Photos", description="Аксҳо")
+ * @OA\Tag(name="Products", description="Маҳсулотҳо")
  * @OA\Tag(name="Orders", description="Фармоишҳо")
  * @OA\Tag(name="Reviews", description="Шарҳҳо")
  * @OA\Tag(name="Statuses", description="Ҳолатҳо")
- * @OA\Tag(name="Products", description="Маҳсулотҳо")
  * @OA\Tag(name="Settings", description="Танзимотҳо")
  * @OA\Tag(name="Discounts", description="Тахфифҳо")
  * @OA\Tag(name="Favorites", description="Дӯстдоштаҳо")

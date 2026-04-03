@@ -28,38 +28,43 @@ use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\ValueController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('roles/assign', [RoleController::class, 'assign']);
-Route::post('permissions/assign', [PermissionController::class, 'assign']);
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/{product}', [ProductController::class, 'show']);
 Route::get('products/{product}/related', [ProductController::class, 'related']);
 
+Route::middleware('auth:api')->group(function () {
+    Route::middleware('role:admin')->group(function () {
+        Route::post('roles/assign', [RoleController::class, 'assign']);
+        Route::post('permissions/assign', [PermissionController::class, 'assign']);
+    });
 
-// Route::middleware('auth:api')->group(function () {
-Route::apiResources([
-    'users' => UserController::class,
-    'roles' => RoleController::class,
-    'photos' => PhotoController::class,
-    'orders' => OrderController::class,
-    'reviews' => ReviewController::class,
-    'statuses' => StatusController::class,
-    'products' => ProductController::class,
-    'settings' => SettingController::class,
-    'discounts' => DiscountController::class,
-    'favorites' => FavoriteController::class,
-    'categories' => CategoryController::class,
-    'permissions' => PermissionController::class,
-    'users.photos' => UserPhotoController::class,   //
-    'user-settings' => UserSettingController::class,
-    'payment-types' => PaymentTypeController::class,
-    'user-addresses' => UserAddressController::class,
-    'statuses.orders' => StatusOrderController::class,
-    'products.photos' => ProductPhotoContoller::class,
-    'products.reviews' => ProductReviewContoller::class,
-    'delivery-methods' => DeliveryMethodController::class,  //
-    'payment-card-types' => PaymentCardTypeController::class,   //
-    'stocks' => StockController::class,
-    'categories.products' => CategoryProductController::class,
-    'user-payment-cards' => UserPaymentCardsController::class,
-    'attributes' => AttributeController::class,
-    'values' => ValueController::class,  //
-]);
-// });
+    Route::apiResources([
+        'users' => UserController::class,
+        'roles' => RoleController::class,
+        'photos' => PhotoController::class,
+        'orders' => OrderController::class,
+        'reviews' => ReviewController::class,
+        'statuses' => StatusController::class,
+        'settings' => SettingController::class,
+        'discounts' => DiscountController::class,
+        'favorites' => FavoriteController::class,
+        'categories' => CategoryController::class,
+        'permissions' => PermissionController::class,
+        'users.photos' => UserPhotoController::class,   //
+        'user-settings' => UserSettingController::class,
+        'payment-types' => PaymentTypeController::class,
+        'user-addresses' => UserAddressController::class,
+        'statuses.orders' => StatusOrderController::class,
+        'products.photos' => ProductPhotoContoller::class,
+        'products.reviews' => ProductReviewContoller::class,
+        'delivery-methods' => DeliveryMethodController::class,  //
+        'payment-card-types' => PaymentCardTypeController::class,   //
+        'stocks' => StockController::class,
+        'categories.products' => CategoryProductController::class,
+        'user-payment-cards' => UserPaymentCardsController::class,
+        'attributes' => AttributeController::class,
+        'values' => ValueController::class,  //
+    ]);
+
+    Route::apiResource('products', ProductController::class)->except(['index', 'show']);
+});

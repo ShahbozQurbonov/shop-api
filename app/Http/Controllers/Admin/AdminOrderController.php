@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class AdminOrderController extends Controller
 {
@@ -15,6 +14,7 @@ class AdminOrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        $this->middleware('permission:order:viewAny')->only(['index']);
         $this->orderRepository = app(OrderRepository::class);
     }
 
@@ -161,8 +161,6 @@ class AdminOrderController extends Controller
     */
     public function index(Request $request)
     {
-        Gate::authorize('order:viewAny');
-
         $orders = $this->orderRepository->getAll($request);
 
         return OrderResource::collection($orders);

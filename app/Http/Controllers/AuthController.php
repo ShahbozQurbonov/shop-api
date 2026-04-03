@@ -46,7 +46,7 @@ class AuthController extends Controller
     *         response=200,
     *         description="Воридшавӣ бомуваффақият анҷом ёфт",
     *         @OA\JsonContent(
-    *             @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiN2VlNWM0OTBiZGI2ODkxNmNkNmJiOTUxZGY0NzVhN2NhYjA3MjBmM2RmOGY4ZmQwODJhMWY3OTc1YWI0MDAyMGQxMTFhYTdhYzcyZTkwZWIiLCJpYXQiOjE3NzQ2MDY0MjEuOTIwMDIzLCJuYmYiOjE3NzQ2MDY0MjEuOTIwMDI4LCJleHAiOjE4MDYxNDI0MjEuOTEwMzMzLCJzdWIiOiIxOCIsInNjb3BlcyI6W119.SJrtrc1KcMYGJKH2aIoVZZsgeMJEx1_PBHrCpJ9_XVITrtcnHG-bPoDMO4WVR83nxWi6QdcsQgEiJShF-Pi1UJNHZVOJO9JrgA4KHVAiIeAJfm0gugbyAObwpqwxBCUC_zxqBfUWsjYBqa8QTumraZX2cQ3IvmTXP40IjI8mgBWAlME77RRLIwvJqI4dCs0PnL7u36DDSNCJwHAkPZcYUN7Uyj3Xydms2SdGvJC217tTqemO2GaNeTaMKfNsZ5qDLN5uKNZ5T3v93hpiYovJV54QyVUIm9gItCdCaG2TOJ9yFmB3_9yBGcQvbAAHjRU66nby6NTt6jcCSO69COD0dbnUXn5KvrdnX5m0jRLmrwm0pxN7AprMo5gBnd9RkpmimSoTMuvU5eE8uoNBbDFTbkzPjyIZ6TV84sWGp1vEL1huavMo5MTWjx-eAmLVhepLIqqW2_SOvbhxBEaSTaXfoG-Y9aHAQolkHF6gKwbG4k9f1KsJd5r6CsdWUuiMclUgwr9vpX24oeLRMPq_GtfZE5PNLqwnizbCQDYQVba5Rm9TaQfTc0eC8-i1JnXhPjUoVDp2mN5CePUd_ZzH5jYMA2amVk05lwYFiJu-vzEZlvJNOWaZG0e2CsFhICOiKHk8yjR9HoTeD-LvaZv3LGJGBC3Y5F4Gyu8ch8bxPmCN2P0")
+    *             @OA\Property(property="token", type="string", example="access_token_here")
     *         )
     *     ),
     *     @OA\Response(

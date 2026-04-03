@@ -56,6 +56,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'swagger_docs_token' => env('SWAGGER_DOCS_TOKEN', ''),
+
     'asset_url' => env('ASSET_URL'),
 
     /*
