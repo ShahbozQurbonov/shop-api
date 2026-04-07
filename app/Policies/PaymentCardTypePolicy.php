@@ -13,7 +13,7 @@ class PaymentCardTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasRole('shop-manager');
     }
 
     /**
@@ -21,7 +21,7 @@ class PaymentCardTypePolicy
      */
     public function view(User $user, PaymentCardType $paymentCardType): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -29,7 +29,7 @@ class PaymentCardTypePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -37,7 +37,7 @@ class PaymentCardTypePolicy
      */
     public function update(User $user, PaymentCardType $paymentCardType): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -45,7 +45,7 @@ class PaymentCardTypePolicy
      */
     public function delete(User $user, PaymentCardType $paymentCardType): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -53,7 +53,7 @@ class PaymentCardTypePolicy
      */
     public function restore(User $user, PaymentCardType $paymentCardType): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -61,6 +61,6 @@ class PaymentCardTypePolicy
      */
     public function forceDelete(User $user, PaymentCardType $paymentCardType): bool
     {
-        //
+        return false;
     }
 }

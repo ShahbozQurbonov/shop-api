@@ -8,59 +8,44 @@ use App\Http\Requests\UpdatePaymentCardTypeRequest;
 
 class PaymentCardTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
+
     public function index()
     {
         return $this->response(PaymentCardType::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePaymentCardTypeRequest $request)
     {
-        //
+        $paymentCardType = PaymentCardType::create($request->validated());
+
+        return $this->success('Намуди корти пардохт бо муваффақият сохта шуд', $paymentCardType);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(PaymentCardType $paymentCardType)
     {
-        //
+        return $this->response($paymentCardType);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PaymentCardType $paymentCardType)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePaymentCardTypeRequest $request, PaymentCardType $paymentCardType)
     {
-        //
+        $paymentCardType->update($request->validated());
+
+        return $this->success('Намуди корти пардохт бо муваффақият навсозӣ шуд', $paymentCardType);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(PaymentCardType $paymentCardType)
     {
-        //
+        abort_unless(
+            auth()->user()->hasRole('admin') || auth()->user()->hasRole('shop-manager'),
+            403
+        );
+
+        $paymentCardType->delete();
+
+        return $this->success('Намуди корти пардохт бо муваффақият нест карда шуд');
     }
 }

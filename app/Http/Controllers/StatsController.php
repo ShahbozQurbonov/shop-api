@@ -13,14 +13,41 @@ use Illuminate\Support\LazyCollection;
 
 class StatsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
-     * Count the number of orders
-     */
+    * @OA\Get(
+    *     path="/api/admin/stats/orders-count",
+    *     summary="Шумораи фармоишҳо",
+    *     description="Ин endpoint шумораи фармоишҳои пӯшидашударо дар давраи интихобшуда бармегардонад",
+    *     tags={"Statistics"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         name="from",
+    *         in="query",
+    *         description="Санаи оғоз (формат: YYYY-MM-DD)",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Parameter(
+    *         name="to",
+    *         in="query",
+    *         description="Санаи анҷом (формат: YYYY-MM-DD)",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Шумораи фармоишҳо",
+    *         @OA\JsonContent(
+    *             @OA\Property(property="data", type="integer", example=120)
+    *         )
+    *     )
+    * )
+    */
     public function ordersCount(Request $request)
     {
         $from = Carbon::now()->subMonth();
@@ -39,7 +66,36 @@ class StatsController extends Controller
         );
     }
 
-
+    /**
+    * @OA\Get(
+    *     path="/api/admin/stats/orders-sales-sum",
+    *     summary="Ҷамъбасти фурӯш",
+    *     description="Ин endpoint маблағи умумии фармоишҳои пӯшидашударо бармегардонад",
+    *     tags={"Statistics"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         name="from",
+    *         in="query",
+    *         description="Санаи оғоз",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Parameter(
+    *         name="to",
+    *         in="query",
+    *         description="Санаи анҷом",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Маблағи умумӣ",
+    *         @OA\JsonContent(
+    *             @OA\Property(property="data", type="number", example=5600.50)
+    *         )
+    *     )
+    * )
+    */
     public function ordersSalesSum(Request $request)
     {
         $from = Carbon::now()->subMonth();
@@ -58,7 +114,44 @@ class StatsController extends Controller
         );
     }
 
-
+    /**
+    * @OA\Get(
+    *     path="/api/admin/stats/delivery-methods-ratio",
+    *     summary="Тақсимоти усулҳои интиқол",
+    *     description="Ин endpoint фоиз ва шумораи фармоишҳоро аз рӯи усули интиқол бармегардонад",
+    *     tags={"Statistics"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         name="from",
+    *         in="query",
+    *         description="Санаи оғоз",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Parameter(
+    *         name="to",
+    *         in="query",
+    *         description="Санаи анҷом",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Маълумот дар бораи усулҳои интиқол",
+    *         @OA\JsonContent(
+    *             @OA\Property(
+    *                 property="data",
+    *                 type="array",
+    *                 @OA\Items(
+    *                     @OA\Property(property="name", type="object", example={"tj":"Курьер","ru":"Курьер","uz":"Kuryer"}),
+    *                     @OA\Property(property="percentage", type="number", example=45.5),
+    *                     @OA\Property(property="amount", type="integer", example=50)
+    *                 )
+    *             )
+    *         )
+    *     )
+    * )
+    */
     public function deliveryMethodsRatio(Request $request)
     {
         $from = Carbon::now()->subMonth();
@@ -82,9 +175,13 @@ class StatsController extends Controller
                 ->whereRelation('status', 'code', 'closed')
                 ->count();
 
+            $percentage = $allOrders > 0
+                ? round($deliveryMethodOrders * 100 / $allOrders, 1)
+                : 0;
+
             $response[] = [
                 'name' => $deliveryMethod->getTranslations('name'),
-                'percentage' => round($deliveryMethodOrders * 100 / $allOrders, 1),
+                'percentage' => $percentage,
                 'amount' => $deliveryMethodOrders,
             ];
         }
@@ -92,7 +189,43 @@ class StatsController extends Controller
         return $this->response($response);
     }
 
-
+    /**
+    * @OA\Get(
+    *     path="/api/admin/stats/orders-count-by-days",
+    *     summary="Шумораи фармоишҳо аз рӯи рӯз",
+    *     description="Ин endpoint шумораи фармоишҳоро барои ҳар рӯз дар давраи интихобшуда бармегардонад",
+    *     tags={"Statistics"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         name="from",
+    *         in="query",
+    *         description="Санаи оғоз",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Parameter(
+    *         name="to",
+    *         in="query",
+    *         description="Санаи анҷом",
+    *         required=false,
+    *         @OA\Schema(type="string", format="date")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Рӯйхати рӯзҳо бо шумораи фармоишҳо",
+    *         @OA\JsonContent(
+    *             @OA\Property(
+    *                 property="data",
+    *                 type="array",
+    *                 @OA\Items(
+    *                     @OA\Property(property="date", type="string", example="2025-01-01"),
+    *                     @OA\Property(property="orders_count", type="integer", example=15)
+    *                 )
+    *             )
+    *         )
+    *     )
+    * )
+    */
     public function ordersCountByDays(Request $request)
     {
         $from = Carbon::now()->subMonth();

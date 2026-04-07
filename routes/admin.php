@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('stats')->group(function () {
+Route::prefix('stats')->middleware(['auth:api', 'role:admin|shop-manager', 'permission:stats:view'])->group(function () {
     Route::get('orders-count', [StatsController::class, 'ordersCount']);
     Route::get('orders-sales-sum', [StatsController::class, 'ordersSalesSum']);
     Route::get('orders-count-by-days', [StatsController::class, 'ordersCountByDays']);
@@ -14,4 +14,6 @@ Route::prefix('stats')->group(function () {
 });
 
 
-Route::apiResource('orders', AdminOrderController::class);
+Route::apiResource('orders', AdminOrderController::class)
+    ->only(['index'])
+    ->middleware(['auth:api', 'permission:order:viewAny']);

@@ -11,7 +11,8 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->can('category:create');
+        // return true;
     }
 
     /**
@@ -22,7 +23,15 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'parent_id' => 'nullable|exists:categories,id',
+
+            'name' => 'required|array',
+            'name.uz' => 'required|string|max:255',
+            'name.ru' => 'required|string|max:255',
+            'name.tj' => 'required|string|max:255',
+
+            'icon' => 'nullable|string',
+            'order' => 'nullable|integer',
         ];
     }
 }

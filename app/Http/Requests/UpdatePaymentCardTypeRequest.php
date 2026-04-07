@@ -11,7 +11,7 @@ class UpdatePaymentCardTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->hasRole('admin') || $this->user()?->hasRole('shop-manager');
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdatePaymentCardTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|string|max:255',
+            'code' => 'nullable|string|max:100|unique:payment_card_types,code,' . $this->route('payment_card_type')?->id,
+            'icon' => 'nullable|string|max:255',
         ];
     }
 }

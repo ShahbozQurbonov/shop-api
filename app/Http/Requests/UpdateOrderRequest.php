@@ -11,7 +11,8 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->can('order:update');
+        // return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'delivery_method_id' => 'nullable|integer|exists:delivery_methods,id',
+            'payment_type_id'    => 'nullable|integer|exists:payment_types,id',
+            'address_id'         => 'nullable|integer|exists:user_addresses,id',
+            'status_id'          => 'nullable|integer|exists:statuses,id',
+            'comment'            => 'nullable|string|max:500',
+
+            'products' => 'nullable|array',
+            'products.*.product_id' => 'required_with:products|integer|exists:products,id',
+            'products.*.quantity'   => 'required_with:products|integer|min:1',
+            'products.*.stock_id'   => 'nullable|integer|exists:stocks,id',
         ];
     }
 }

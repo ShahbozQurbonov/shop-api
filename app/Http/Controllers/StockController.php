@@ -5,62 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\Stock;
 use App\Http\Requests\StoreStockRequest;
 use App\Http\Requests\UpdateStockRequest;
+use App\Http\Resources\StockResource;
+use Illuminate\Http\JsonResponse;
 
 class StockController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth:api');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(): JsonResponse
     {
-        //
+        abort_unless(auth()->user()->can('stock:viewAny'), 403);
+
+        return $this->response(StockResource::collection(Stock::latest()->paginate(20)));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreStockRequest $request)
+    public function store(StoreStockRequest $request): JsonResponse
     {
-        //
+        $stock = Stock::create($request->validated());
+
+        return $this->success('Сток бо муваффақият сохта шуд', $stock);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Stock $stock)
+    public function show(Stock $stock): JsonResponse
     {
-        //
+        abort_unless(auth()->user()->can('stock:view'), 403);
+
+        return $this->response(new StockResource($stock));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Stock $stock)
+    public function update(UpdateStockRequest $request, Stock $stock): JsonResponse
     {
-        //
+        $stock->update($request->validated());
+
+        return $this->success('Сток бо муваффақият навсозӣ шуд', new StockResource($stock));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateStockRequest $request, Stock $stock)
+    public function destroy(Stock $stock): JsonResponse
     {
-        //
-    }
+        abort_unless(auth()->user()->can('stock:delete'), 403);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Stock $stock)
-    {
-        //
+        $stock->delete();
+
+        return $this->success('Сток бо муваффақият нест карда шуд');
     }
 }

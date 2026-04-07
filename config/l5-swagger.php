@@ -12,7 +12,7 @@ return [
                 /*
                  * Route for accessing api documentation interface
                  */
-                'api' => 'api/documentation',
+                'api' => 'api/docs',
             ],
             'paths' => [
                 /*
@@ -65,9 +65,9 @@ return [
              * Middleware allows to prevent unexpected access to API documentation
              */
             'middleware' => [
-                'api' => [],
+                'api' => ['web', 'swagger.docs.access'],
                 'asset' => [],
-                'docs' => [],
+                'docs' => ['web', 'swagger.docs.access'],
                 'oauth2_callback' => [],
             ],
 
@@ -125,7 +125,10 @@ return [
              *
              * @see \OpenApi\scan
              */
-            'analyser' => null,
+            'analyser' => new \OpenApi\Analysers\ReflectionAnalyser([
+                new \OpenApi\Analysers\AttributeAnnotationFactory(),
+                new \OpenApi\Analysers\DocBlockAnnotationFactory(),
+            ]),
 
             /**
              * analysis: defaults to a new \OpenApi\Analysis .
@@ -208,11 +211,11 @@ return [
                         ],
                     ],
                 ],
-                'sanctum' => [ // Unique name of security
-                    'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
-                    'description' => 'Enter token in format (Bearer <token>)',
-                    'name' => 'Authorization', // The name of the header or query parameter to be used.
-                    'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+                'bearerAuth' => [ // Unique name of security
+                    'type' => 'http',
+                    'description' => 'Laravel Passport bearer token authentication.',
+                    'scheme' => 'bearer',
+                    'bearerFormat' => 'OAuth2',
                 ],
                 */
             ],

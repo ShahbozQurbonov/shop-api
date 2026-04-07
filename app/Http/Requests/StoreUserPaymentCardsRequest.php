@@ -20,11 +20,11 @@ class StoreUserPaymentCardsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required",
-            "number" => "required",
-            "exp_date" => "required",
-            "holder_name" => "required",
-            "payment_card_type_id" => "required",
+            "name" => "required|string|max:255",
+            "number" => "required|digits_between:12,19",
+            "exp_date" => "required|string",
+            "holder_name" => "required|string|max:255",
+            "payment_card_type_id" => "required|exists:payment_card_types,id",
         ];
     }
 }
